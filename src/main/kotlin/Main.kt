@@ -6,7 +6,6 @@ import utils.Validator.readNextInt
 import utils.Validator.readNextLine
 import java.io.File
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 private val gameAPI = GameAPI(JSONSerializer(File("Match-four.json")))
@@ -43,7 +42,6 @@ fun mainMenu(): Int {
          > ==>> """.trimMargin(">")
     )
 }
-
 fun runMenu() {
     do {
         when (val option = mainMenu()) {
@@ -74,7 +72,6 @@ fun playGame() {
         println("Add Failed")
     }
 }
-
 fun createPlayer() {
     val playerName = readNextLine("Enter Player name")
 
@@ -102,20 +99,57 @@ fun deleteOption() {
         }
     } while(true)
 }
+fun updateOption() {
+    do{
+        when(val option: Int = readNextInt("""
+        |   Update menu        |
+        | Type:                |
+        | -------------------- |
+        | 1 - to update game   |
+        | 2 - to update player |
+        | 0 - to exit menu     |
+        """.trimMargin())) {
+            1 -> updateGame()
+            2 -> updatePlayer()
+            0 -> break
+            else -> println("Invalid option entered: $option")
+        }
+    } while(true)
+}
+fun searchOption() {
+    do{
+        when(val option: Int = readNextInt("""
+        |   Search menu        |
+        | Type:                |
+        | -------------------- |
+        | 1 - to search game   |
+        | 2 - to search player |
+        | 0 - to exit menu     |
+        """.trimMargin())) {
+            1 -> searchGame()
+            2 -> searchPlayer()
+            0 -> break
+            else -> println("Invalid option entered: $option")
+        }
+    } while(true)
+}
 
 fun deleteGame() {
 
 }
-
 fun deletePlayer() {
 
 }
-
-fun updateOption() {
+fun updateGame() {
 
 }
+fun updatePlayer() {
 
-fun searchOption() {
+}
+fun searchPlayer() {
+
+}
+fun searchGame() {
 
 }
 
