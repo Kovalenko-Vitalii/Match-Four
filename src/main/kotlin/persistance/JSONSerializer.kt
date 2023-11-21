@@ -3,7 +3,6 @@ package persistence
 import com.thoughtworks.xstream.XStream
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver
 import models.*
-import persistance.Serializer
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
@@ -22,7 +21,7 @@ class JSONSerializer(private val file: File) : Serializer {
      * @throws Exception If there is an error during the reading process.
      */
     @Throws(Exception::class)
-    fun read(): Any {
+    override fun read(): Any {
         val xStream = XStream(JettisonMappedXmlDriver())
         xStream.allowTypes(arrayOf(Game::class.java))
         xStream.allowTypes(arrayOf(Player::class.java))
@@ -39,7 +38,7 @@ class JSONSerializer(private val file: File) : Serializer {
      * @throws Exception If there is an error during the writing process.
      */
     @Throws(Exception::class)
-    fun write(obj: Any?) {
+    override fun write(obj: Any?) {
         val xStream = XStream(JettisonMappedXmlDriver())
         val outputStream = xStream.createObjectOutputStream(FileWriter(file))
         outputStream.writeObject(obj)

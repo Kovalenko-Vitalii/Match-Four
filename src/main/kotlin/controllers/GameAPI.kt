@@ -1,7 +1,7 @@
 package controllers
 
-import persistance.Serializer
 import models.*
+import persistence.Serializer
 
 class GameAPI(serializerType: Serializer) {
     private var games = ArrayList<Game>()
@@ -56,12 +56,14 @@ class GameAPI(serializerType: Serializer) {
 
     @Throws(Exception::class)
     fun load() {
-        // games = serializer.read() as ArrayList<Game>
+        games = serializer.read() as ArrayList<Game>
+        players = serializer.read() as ArrayList<Player>
     }
 
     @Throws(Exception::class)
     fun save() {
-        // serializer.write(games)
+        serializer.write(games)
+        serializer.write(players)
     }
 }
 

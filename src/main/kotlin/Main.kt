@@ -6,11 +6,12 @@ import utils.Validator.readNextInt
 import utils.Validator.readNextLine
 import java.io.File
 import java.util.*
-
+import kotlin.system.exitProcess
 
 private val gameAPI = GameAPI(JSONSerializer(File("Match-four.json")))
 
 fun main() {
+    load()
     runMenu()
 }
 
@@ -179,8 +180,26 @@ fun searchGame() {
 
 }
 
-fun exitApp() {
+fun save(){
+    try {
+        gameAPI.save()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+}
 
+fun load(){
+    try {
+        gameAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error loading from file: $e")
+    }
+}
+
+fun exitApp() {
+    save()
+    println("Exiting...bye")
+    exitProcess(0)
 }
 
 
