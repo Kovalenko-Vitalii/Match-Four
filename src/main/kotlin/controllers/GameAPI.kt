@@ -60,6 +60,11 @@ class GameAPI(serializerType: Serializer) {
     fun isValidIndexGames(index: Int): Boolean = isValidListIndex(index, games)
     fun isValidIndexPlayers(index: Int): Boolean = isValidListIndex(index, players)
 
+    fun searchGameByTitle(searchString: String) : String =
+        formatListString(games.filter {game -> game.winnerName.contains(searchString, ignoreCase = true)})
+    fun searchPlayerByTitle(searchString: String) : String =
+        formatListString(players.filter {player -> player.playerName.contains(searchString, ignoreCase = true)})
+
     fun numberOfGames(): Int = games.size
 
     fun numberOfPlayers(): Int = players.size

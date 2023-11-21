@@ -6,7 +6,6 @@ import utils.Validator.readNextInt
 import utils.Validator.readNextLine
 import java.io.File
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.system.exitProcess
 
 private val gameAPI = GameAPI(JSONSerializer(File("Match-four.json")))
@@ -178,19 +177,21 @@ fun updatePlayerMenu(indexToUpdate: Int){
             else -> println("Invalid option entered.")
         }
 }
-
-/* fun updatePlayerMenuPrint(): Int{
-    readNextInt(""" 
-        >   Enter player update option: 
-        >       1 - Nickname
-        >       0 - Exit
-    """.trimMargin(">"))
-} */
 fun searchPlayer() {
-
+    val searchTitle = readNextLine("Enter the description to search by: ")
+    val searchResults = gameAPI.searchPlayerByTitle(searchTitle)
+    if(searchResults.isEmpty())
+        println("Nothing found")
+    else
+        println(searchResults)
 }
 fun searchGame() {
-
+    val searchTitle = readNextLine("Enter the description to search by: ")
+    val searchResults = gameAPI.searchGameByTitle(searchTitle)
+    if(searchResults.isEmpty())
+        println("Nothing found")
+    else
+        println(searchResults)
 }
 
 fun save(){
