@@ -6,6 +6,7 @@ import utils.Validator.readNextInt
 import utils.Validator.readNextLine
 import java.io.File
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.system.exitProcess
 
 private val gameAPI = GameAPI(JSONSerializer(File("Match-four.json")))
@@ -32,10 +33,11 @@ fun mainMenu(): Int {
          > |                                      |
          > |   1) Play a game                     |
          > |   2) Create player                   |
-         > |   3) List all games                  |
-         > |   4) Delete a game/player            |
-         > |   5) Update a game/player            |
-         > |   6) Search a game/player            |
+         > |   3) List games                      |
+         > |   4) List players                    |
+         > |   5) Delete a game/player            |
+         > |   6) Update a player                 |
+         > |   7) Search a game/player            |
          > ----------------------------------------
          > |   0) Exit                            |
          > ----------------------------------------
@@ -48,9 +50,10 @@ fun runMenu() {
             1 -> playGame()
             2 -> createPlayer()
             3 -> listAllGames()
-            4 -> deleteOption()
-            5 -> updateOption()
-            6 -> searchOption()
+            4 -> listAllPlayers()
+            5 -> deleteOption()
+            6 -> updatePlayer()
+            7 -> searchOption()
             0 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
@@ -60,7 +63,7 @@ fun runMenu() {
 fun playGame() {
     val gameField = Array(6) { IntArray(7) }
     val isFinished = true
-    val winnerName = readNextLine("Enter winner name")
+    val winnerName = readNextLine("Enter winner name: ")
     val date = Date()
 
     val newGame = Game(gameField, isFinished, winnerName, date)
@@ -74,7 +77,7 @@ fun playGame() {
 }
 fun createPlayer() {
     while(true) {
-        val playerName = readNextLine("Enter Player name:")
+        val playerName = readNextLine("Enter Player name: ")
         if (gameAPI.addPlayer(Player(playerName, 0, null))) {
             println("Added Successfully!")
             break
@@ -100,26 +103,9 @@ fun deleteOption() {
         | 1 - to delete game   |
         | 2 - to delete player |
         | 0 - to exit menu     |
-        """.trimMargin())) {
+        ==>""".trimMargin())) {
             1 -> deleteGame()
             2 -> deletePlayer()
-            0 -> break
-            else -> println("Invalid option entered: $option")
-        }
-    } while(true)
-}
-fun updateOption() {
-    do{
-        when(val option: Int = readNextInt("""
-        |   Update menu        |
-        | Type:                |
-        | -------------------- |
-        | 1 - to update game   |
-        | 2 - to update player |
-        | 0 - to exit menu     |
-        """.trimMargin())) {
-            1 -> updateGame()
-            2 -> updatePlayer()
             0 -> break
             else -> println("Invalid option entered: $option")
         }
@@ -134,7 +120,7 @@ fun searchOption() {
         | 1 - to search game   |
         | 2 - to search player |
         | 0 - to exit menu     |
-        """.trimMargin())) {
+        ==>""".trimMargin())) {
             1 -> searchGame()
             2 -> searchPlayer()
             0 -> break
@@ -167,12 +153,39 @@ fun deletePlayer() {
             }
     else println("No player record found!")
 }
-fun updateGame() {
-
-}
 fun updatePlayer() {
-
+    listAllPlayers()
+    if(gameAPI.numberOfPlayers() > 0)
+        while (true){
+            val indexToUpdate = readNextInt("Enter index of player to update: ")
+            if (gameAPI.isValidIndexPlayers(indexToUpdate)) {
+                updatePlayerMenu(indexToUpdate)
+                break
+            } else {
+                println("Sorry, could not update that!")
+            }}
+    else println("No player record found!")
 }
+fun updatePlayerMenu(indexToUpdate: Int){
+    while(true)
+        when(readNextInt(""" 
+        >  | Enter player update option: |
+        >  | 1 - Nickname                |
+        >  | 0 - Exit                    |
+        ==>""".trimMargin(">"))){
+            1 -> gameAPI.updatePlayer(indexToUpdate, Player(readNextLine("Enter new player name: "), 0, null))
+            0 -> break
+            else -> println("Invalid option entered.")
+        }
+}
+
+/* fun updatePlayerMenuPrint(): Int{
+    readNextInt(""" 
+        >   Enter player update option: 
+        >       1 - Nickname
+        >       0 - Exit
+    """.trimMargin(">"))
+} */
 fun searchPlayer() {
 
 }
@@ -187,7 +200,6 @@ fun save(){
         System.err.println("Error writing to file: $e")
     }
 }
-
 fun load(){
     try {
         gameAPI.load()

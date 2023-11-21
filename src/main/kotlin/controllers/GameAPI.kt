@@ -20,6 +20,17 @@ class GameAPI(serializerType: Serializer) {
         if(isValidListIndex(indexToDelete, players)) players.removeAt(indexToDelete)
         else null
 
+    fun updatePlayer(indexToUpdate: Int, player: Player?): Boolean {
+        val foundPlayer = findPlayer(indexToUpdate)
+
+        if ((foundPlayer != null) && (player != null)) {
+            foundPlayer.playerName = player.playerName
+            return true
+        }
+        return false
+    }
+
+
     fun listAllGames(): String =
         if(games.isEmpty()) "\u001B[31B No games recorded."
         else formatListString(games)
@@ -40,19 +51,22 @@ class GameAPI(serializerType: Serializer) {
         if(players.isEmpty()) "\u001B[31B No players recorded."
         else formatListString(players.sortedByDescending { it.gamesPlayed?.size })
 
-
     private fun formatListString(contentToFormat: List<Any>): String =
         contentToFormat.joinToString (separator = "\n"){ record ->
-            contentToFormat.indexOf(record).toString() + ": " + record.toString()
-        }
+            contentToFormat.indexOf(record).toString() + ": " + record.toString() }
 
     private fun isValidListIndex(index: Int, list: List<Any>): Boolean = index >= 0 && index < list.size
 
-    private fun isValidIndex(index: Int): Boolean = isValidListIndex(index, games)
+    fun isValidIndexGames(index: Int): Boolean = isValidListIndex(index, games)
+    fun isValidIndexPlayers(index: Int): Boolean = isValidListIndex(index, players)
 
     fun numberOfGames(): Int = games.size
 
     fun numberOfPlayers(): Int = players.size
+
+    fun findPlayer(index: Int): Player? =
+        if (isValidListIndex(index, players)) players[index]
+        else null
 
     @Throws(Exception::class)
     fun load() {
