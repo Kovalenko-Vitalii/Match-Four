@@ -12,7 +12,6 @@ private val gameAPI = GameAPI(JSONSerializer(File("Match-four.json")))
 
 fun main() {
     runMenu()
-    mainMenu()
 }
 
 fun mainMenu(): Int {
@@ -60,7 +59,7 @@ fun runMenu() {
 fun playGame() {
     val gameField = Array(6) { IntArray(7) }
     val isFinished = true
-    val winnerName = readln()
+    val winnerName = readNextLine("Enter winner name")
     val date = Date()
 
     val newGame = Game(gameField, isFinished, winnerName, date)
@@ -69,17 +68,26 @@ fun playGame() {
     if (isAdded) {
         println("Added Successfully")
     } else {
-        println("Add Failed")
+        println("Failed! Please try again.")
     }
 }
 fun createPlayer() {
-    val playerName = readNextLine("Enter Player name")
-
-    val addPlayer = Player(playerName, 0, null)
+    while(true) {
+        val playerName = readNextLine("Enter Player name:")
+        if (gameAPI.addPlayer(Player(playerName, 0, null))) {
+            println("Added Successfully!")
+            break
+        } else {
+            println("Failed! Please try again.")
+        }
+    }
 }
 
 fun listAllGames() {
-    gameAPI.listAllGames()
+    println(gameAPI.listAllGames())
+}
+fun listAllPlayers() {
+    println(gameAPI.listAllPlayers())
 }
 
 fun deleteOption() {
@@ -135,10 +143,28 @@ fun searchOption() {
 }
 
 fun deleteGame() {
-
+    listAllGames()
+    if(gameAPI.numberOfGames() > 0)
+        while (true)
+            if (gameAPI.deleteGame(readNextInt("Enter index of game to delete: ")) != null) {
+                println("Deleted successfully!")
+                break
+            } else {
+                println("Sorry, could not delete that!")
+            }
+    else println("No game record found!")
 }
 fun deletePlayer() {
-
+    listAllPlayers()
+    if(gameAPI.numberOfPlayers() > 0)
+        while (true)
+            if (gameAPI.deletePlayer(readNextInt("Enter index of player to delete: ")) != null) {
+                println("Deleted successfully!")
+                break
+            } else {
+                println("Sorry, could not delete that!")
+            }
+    else println("No player record found!")
 }
 fun updateGame() {
 
