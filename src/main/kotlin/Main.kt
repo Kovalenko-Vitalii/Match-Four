@@ -34,9 +34,7 @@ fun mainMenu(): Int {
          > |   2) Create player                   |
          > |   3) List games                      |
          > |   4) List players                    |
-         > |   5) Delete a game/player            |
-         > |   6) Update a player                 |
-         > |   7) Search a game/player            |
+         > |   5) Search a game/player            |
          > ----------------------------------------
          > |   0) Exit                            |
          > ----------------------------------------
@@ -50,9 +48,7 @@ fun runMenu() {
             2 -> createPlayer()
             3 -> listAllGames()
             4 -> listAllPlayers()
-            5 -> deleteOption()
-            6 -> updatePlayer()
-            7 -> searchOption()
+            5 -> searchOption()
             0 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
@@ -87,39 +83,111 @@ fun createPlayer() {
 }
 
 fun listAllGames() {
-    println(gameAPI.listAllGames())
+    while(true){
+        when(gameListOptions()){
+            1 -> println(gameAPI.listAllGames())
+            2 -> println(gameAPI.listGamesByTime())
+            0 -> break
+            else -> println("Invalid option")
+        }
+        val selectedIndex = readNextInt(" Enter index of player to select or -1 to exit:")
+
+        if (gameAPI.isValidIndexPlayers(selectedIndex))
+            while(true)
+                when(gameOptions()){
+                    1 -> gameAPI.deleteGame(selectedIndex)
+                    2 -> println("Viewing game. . .")
+                    0 -> break
+                    else -> println("Invalid option")
+                }
+        else if (selectedIndex == -1) break
+        else println("Invalid index!")
+    }
 }
 fun listAllPlayers() {
-    println(gameAPI.listAllPlayers())
+    while(true){
+        when(playerListOptions()){
+            1 -> println(gameAPI.listAllPlayers())
+            2 -> println(gameAPI.listPlayersByVictoriesAmount())
+            3 -> println(gameAPI.listPlayersByGamesPlayed())
+            0 -> break
+            else -> println("Invalid option")
+        }
+        val selectedIndex = readNextInt(" Enter index of player to select or -1 to exit:")
+
+        if (gameAPI.isValidIndexPlayers(selectedIndex))
+            while(true)
+                when(playerOptions()){
+                    1 -> gameAPI.deletePlayer(selectedIndex)
+                    2 -> updatePlayer(selectedIndex)
+                    0 -> break
+                    else -> println("Invalid option")
+                }
+        else if (selectedIndex == -1) break
+        else println("Invalid index!")
+    }
 }
 
-fun deleteOption() {
-    do{
-        when(val option: Int = readNextInt("""
-        |   Delete menu        |
-        | Type:                |
-        | -------------------- |
-        | 1 - to delete game   |
-        | 2 - to delete player |
-        | 0 - to exit menu     |
-        ==>""".trimMargin())) {
-            1 -> deleteGame()
-            2 -> deletePlayer()
-            0 -> break
-            else -> println("Invalid option entered: $option")
-        }
-    } while(true)
+fun gameOptions(): Int{
+    return readNextInt("""
+        > |-----------------|
+        > |  Selected menu  |
+        > |-----------------|
+        > |  1 - delete     |
+        > |  2 - view game  |
+        > |  0 - exit       |
+        > |-----------------|
+        > ==>""".trimMargin(">"))
 }
+fun playerOptions(): Int{
+    return readNextInt("""
+        > |-----------------|
+        > |  Selected menu  |
+        > |-----------------|
+        > |  1 - delete     |
+        > |  2 - update     |
+        > |  0 - exit       |
+        > |-----------------|
+        > ==>""".trimMargin(">"))
+}
+fun playerListOptions(): Int{
+    return  readNextInt("""
+        > |--------------------------------------------|
+        > |  Select list option                        |
+        > |--------------------------------------------|
+        > | 1 - list all players                       |
+        > | 2 - list players by amount of victories    |
+        > | 3 - list players by amount of games played |
+        > | 0 - exit                                   |
+        > |--------------------------------------------|
+        > ==>
+    """.trimMargin(">"))
+}
+fun gameListOptions(): Int{
+    return  readNextInt("""
+        > |--------------------------------------------|
+        > |  Select list option                        |
+        > |--------------------------------------------|
+        > | 1 - list all games                         |
+        > | 2 - list games by lowest time              |
+        > | 0 - exit                                   |
+        > |--------------------------------------------|
+        > ==>
+    """.trimMargin(">"))
+}
+
 fun searchOption() {
     do{
         when(val option: Int = readNextInt("""
-        |   Search menu        |
-        | Type:                |
-        | -------------------- |
-        | 1 - to search game   |
-        | 2 - to search player |
-        | 0 - to exit menu     |
-        ==>""".trimMargin())) {
+        > |----------------------|
+        > |   Search menu        |
+        > | Type:                |
+        > | -------------------- |
+        > | 1 - to search game   |
+        > | 2 - to search player |
+        > | 0 - to exit menu     |
+        > | ---------------------|
+        > ==>""".trimMargin(">"))) {
             1 -> searchGame()
             2 -> searchPlayer()
             0 -> break
@@ -128,42 +196,14 @@ fun searchOption() {
     } while(true)
 }
 
-fun deleteGame() {
-    listAllGames()
-    if(gameAPI.numberOfGames() > 0)
-        while (true)
-            if (gameAPI.deleteGame(readNextInt("Enter index of game to delete: ")) != null) {
-                println("Deleted successfully!")
-                break
-            } else {
-                println("Sorry, could not delete that!")
-            }
-    else println("No game record found!")
-}
-fun deletePlayer() {
-    listAllPlayers()
-    if(gameAPI.numberOfPlayers() > 0)
-        while (true)
-            if (gameAPI.deletePlayer(readNextInt("Enter index of player to delete: ")) != null) {
-                println("Deleted successfully!")
-                break
-            } else {
-                println("Sorry, could not delete that!")
-            }
-    else println("No player record found!")
-}
-fun updatePlayer() {
-    listAllPlayers()
-    if(gameAPI.numberOfPlayers() > 0)
-        while (true){
-            val indexToUpdate = readNextInt("Enter index of player to update: ")
-            if (gameAPI.isValidIndexPlayers(indexToUpdate)) {
-                updatePlayerMenu(indexToUpdate)
-                break
-            } else {
-                println("Sorry, could not update that!")
-            }}
-    else println("No player record found!")
+fun updatePlayer(indexToUpdate: Int) {
+    while (true){
+        if (gameAPI.isValidIndexPlayers(indexToUpdate)) {
+            updatePlayerMenu(indexToUpdate)
+            break
+        } else {
+            println("Sorry, could not update that!")
+        }}
 }
 fun updatePlayerMenu(indexToUpdate: Int){
     while(true)
@@ -177,21 +217,16 @@ fun updatePlayerMenu(indexToUpdate: Int){
             else -> println("Invalid option entered.")
         }
 }
+
 fun searchPlayer() {
-    val searchTitle = readNextLine("Enter the description to search by: ")
-    val searchResults = gameAPI.searchPlayerByTitle(searchTitle)
-    if(searchResults.isEmpty())
-        println("Nothing found")
-    else
-        println(searchResults)
+    val searchResults = gameAPI.searchPlayerByTitle(readNextLine("Enter the description to search by: "))
+    if(searchResults.isEmpty()) println("Nothing found!")
+    else println(searchResults)
 }
 fun searchGame() {
-    val searchTitle = readNextLine("Enter the description to search by: ")
-    val searchResults = gameAPI.searchGameByTitle(searchTitle)
-    if(searchResults.isEmpty())
-        println("Nothing found")
-    else
-        println(searchResults)
+    val searchResults = gameAPI.searchGameByTitle(readNextLine("Enter the description to search by: "))
+    if(searchResults.isEmpty()) println("Nothing found")
+    else println(searchResults)
 }
 
 fun save(){

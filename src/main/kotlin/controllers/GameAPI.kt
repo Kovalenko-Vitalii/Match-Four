@@ -75,8 +75,9 @@ class GameAPI(serializerType: Serializer) {
 
     @Throws(Exception::class)
     fun load() {
-        games = serializer.read() as ArrayList<Game>
         players = serializer.read() as ArrayList<Player>
+        games = serializer.read() as ArrayList<Game>
+
     }
 
     @Throws(Exception::class)
