@@ -8,10 +8,12 @@ import java.io.File
 import java.util.*
 import kotlin.system.exitProcess
 
-private val gameAPI = GameAPI(JSONSerializer(File("Match-four.json")))
+private val gameAPI = GameAPI(JSONSerializer(File("Games.json")))
+private val playerAPI = PlayerAPI(JSONSerializer(File("Players.json")))
 
 fun main() {
     load()
+    println(playerAPI.generateID())
     runMenu()
 }
 
@@ -57,11 +59,9 @@ fun runMenu() {
 
 fun playGame() {
     val gameField = Array(6) { IntArray(7) }
-    val isFinished = true
     val winnerName = readNextLine("Enter winner name: ")
-    val date = Date()
 
-    val newGame = Game(gameField, isFinished, winnerName, date)
+    val newGame = Game(gameAPI.addId(),gameField,winnerName, 0.0, Array(2){""})
     val isAdded = gameAPI.addGame(newGame)
 
     if (isAdded) {
@@ -73,7 +73,7 @@ fun playGame() {
 fun createPlayer() {
     while(true) {
         val playerName = readNextLine("Enter Player name: ")
-        if (gameAPI.addPlayer(Player(playerName, 0, null))) {
+        if (playerAPI.addPlayer(Player(playerAPI.addId(),playerName, 0, null))) {
             println("Added Successfully!")
             break
         } else {
@@ -92,7 +92,7 @@ fun listAllGames() {
         }
         val selectedIndex = readNextInt(" Enter index of player to select or -1 to exit:")
 
-        if (gameAPI.isValidIndexPlayers(selectedIndex))
+        if (playerAPI.isValidIndexPlayers(selectedIndex))
             while(true)
                 when(gameOptions()){
                     1 -> gameAPI.deleteGame(selectedIndex)
@@ -107,18 +107,18 @@ fun listAllGames() {
 fun listAllPlayers() {
     while(true){
         when(playerListOptions()){
-            1 -> println(gameAPI.listAllPlayers())
-            2 -> println(gameAPI.listPlayersByVictoriesAmount())
-            3 -> println(gameAPI.listPlayersByGamesPlayed())
+            1 -> println(playerAPI.listAllPlayers())
+            2 -> println(playerAPI.listPlayersByVictoriesAmount())
+            3 -> println(playerAPI.listPlayersByGamesPlayed())
             0 -> break
             else -> println("Invalid option")
         }
         val selectedIndex = readNextInt(" Enter index of player to select or -1 to exit:")
 
-        if (gameAPI.isValidIndexPlayers(selectedIndex))
+        if (playerAPI.isValidIndexPlayers(selectedIndex))
             while(true)
                 when(playerOptions()){
-                    1 -> gameAPI.deletePlayer(selectedIndex)
+                    1 -> playerAPI.deletePlayer(selectedIndex)
                     2 -> updatePlayer(selectedIndex)
                     0 -> break
                     else -> println("Invalid option")
@@ -198,7 +198,7 @@ fun searchOption() {
 
 fun updatePlayer(indexToUpdate: Int) {
     while (true){
-        if (gameAPI.isValidIndexPlayers(indexToUpdate)) {
+        if (playerAPI.isValidIndexPlayers(indexToUpdate)) {
             updatePlayerMenu(indexToUpdate)
             break
         } else {
@@ -212,14 +212,14 @@ fun updatePlayerMenu(indexToUpdate: Int){
         >  | 1 - Nickname                |
         >  | 0 - Exit                    |
         ==>""".trimMargin(">"))){
-            1 -> gameAPI.updatePlayer(indexToUpdate, Player(readNextLine("Enter new player name: "), 0, null))
+            //1 -> playerAPI.updatePlayer(indexToUpdate, Player(readNextLine("Enter new player name: "), 0, null))
             0 -> break
             else -> println("Invalid option entered.")
         }
 }
 
 fun searchPlayer() {
-    val searchResults = gameAPI.searchPlayerByTitle(readNextLine("Enter the description to search by: "))
+    val searchResults = playerAPI.searchPlayerByTitle(readNextLine("Enter the description to search by: "))
     if(searchResults.isEmpty()) println("Nothing found!")
     else println(searchResults)
 }
@@ -232,6 +232,7 @@ fun searchGame() {
 fun save(){
     try {
         gameAPI.save()
+        playerAPI.save()
     } catch (e: Exception) {
         System.err.println("Error writing to file: $e")
     }
@@ -239,6 +240,7 @@ fun save(){
 fun load(){
     try {
         gameAPI.load()
+        playerAPI.load()
     } catch (e: Exception) {
         System.err.println("Error loading from file: $e")
     }
