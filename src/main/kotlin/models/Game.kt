@@ -1,11 +1,11 @@
 package models
 
-import java.util.*
+data class Game (var gameId: String,
+                 var gameField: Array<IntArray> = Array(6, {IntArray(7)}),
+                 var winnerName: String,
+                 var time: Double,
+                 var opponents: Array<String> = Array(2){""}){
+    override fun toString(): String = "| GAME | id: $gameId | Winner name: $winnerName | Duration: $time"
 
-data class Game (var gameField: Array<IntArray> = Array(6, {IntArray(7)}),
-                 var isFinished: Boolean = false, var winnerName: String, var time: Date){
-    override fun toString(): String {
-        return "WINNER: $winnerName TIME: $time"
-    }
 }
 
