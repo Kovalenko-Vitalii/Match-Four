@@ -15,8 +15,9 @@ fun main() {
     runMenu()
 }
 
-fun mainMenu(): Int {
-    return readNextInt(
+
+fun mainMenu(): Int =
+     readNextInt(
         """ 
          > -------------------------------------------------------------------------------------------------------
          > 
@@ -38,22 +39,21 @@ fun mainMenu(): Int {
          > ----------------------------------------
          > |   0) Exit                            |
          > ----------------------------------------
-         > ==>> """.trimMargin(">")
-    )
-}
+         > ==>> """.trimMargin(">"))
+
 fun runMenu() {
-    do {
-        when (val option = mainMenu()) {
-            1 -> playGame()
-            2 -> createPlayer()
-            3 -> listAllGames()
-            4 -> listAllPlayers()
-            5 -> searchOption()
-            0 -> exitApp()
-            else -> println("Invalid option entered: $option")
-        }
-    } while (true)
+    do when (val option = mainMenu()) {
+        1 -> playGame()
+        2 -> createPlayer()
+        3 -> listAllGames()
+        4 -> listAllPlayers()
+        5 -> searchOption()
+        0 -> exitApp()
+        else -> println("Invalid option entered: $option")
+    }
+    while (true)
 }
+
 
 fun playGame() {
     println(playerAPI.listAllPlayers())
@@ -72,7 +72,7 @@ fun playGame() {
             break
         else println("Selected players have identical IDs!")
     }
-    gameplayController.playGame(player1, player2)
+    gameAPI.addGame(gameplayController.playGame(player1, player2))
 }
 fun createPlayer() {
     while(true) {
