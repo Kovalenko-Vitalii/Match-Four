@@ -89,12 +89,11 @@ fun listAllGames() {
             else -> println("Invalid option")
         }
         val selectedIndex = readNextInt(" Enter index of player to select or -1 to exit:")
-
         if (playerAPI.isValidIndexPlayers(selectedIndex))
             while(true)
                 when(gameOptions()){
                     1 -> gameAPI.deleteGame(selectedIndex)
-                    2 -> println("Viewing game. . .")
+                    //2 -> gameplayController.displayField(gameAPI.getGameById(selectedIndex))
                     0 -> break
                     else -> println("Invalid option")
                 }

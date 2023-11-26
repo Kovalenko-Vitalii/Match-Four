@@ -7,7 +7,7 @@ import utils.Validator.readNextIntWithLimit
 
 
 class GameplayController(gameAPI: GameAPI){
-    val game = Game(gameAPI.addId(), Array(6,{IntArray(7)}), "", 0.0, arrayOf("", ""))
+    private val game = Game(gameAPI.addId(), Array(6,{IntArray(7)}), "", 0.0, arrayOf("", ""))
 
     fun playGame(player1: Player, player2: Player): Game{
         game.opponents = arrayOf(player1.playerId, player2.playerId)
@@ -16,16 +16,15 @@ class GameplayController(gameAPI: GameAPI){
         gameRunning(player1, player2)
         return game
     }
-    fun gameRunning(player1: Player, player2: Player) {
+    private fun gameRunning(player1: Player, player2: Player) {
         while (true) {
             println(placeToken(1))
-            if(checkGame()) {player1.gamesWon; game.winnerName = player1.playerName; break}
+            if(checkGame()) {player1.gamesWon++; game.winnerName = player1.playerName; break}
             println(placeToken(2))
-            if(checkGame()) {player2.gamesWon; game.winnerName = player2.playerName; break}
+            if(checkGame()) {player2.gamesWon++; game.winnerName = player2.playerName; break}
         }
     }
-
-    fun displayField() {
+    private fun displayField(game: Game) {
         println("1 2 3 4 5 6 7")
         for (row in game.gameField) {
             for (cell in row) {
@@ -40,8 +39,7 @@ class GameplayController(gameAPI: GameAPI){
             println()
         }
     }
-
-    fun checkLine(player: Int): Boolean {
+    private fun checkLine(player: Int): Boolean {
         //Check horizontal
         for (row in 0 until 6) {
             for (col in 0 until 4) {
@@ -91,7 +89,7 @@ class GameplayController(gameAPI: GameAPI){
         }
         return false
     }
-    fun checkGame(): Boolean{
+    private fun checkGame(): Boolean{
         if(checkLine(1)){
             println("Player 1 has won this game!")
             return true
@@ -102,15 +100,14 @@ class GameplayController(gameAPI: GameAPI){
         }
         return false
     }
-
-    fun placeToken(playerNumber: Int){
-        displayField()
+    private fun placeToken(playerNumber: Int){
+        displayField(game)
         while(true){
             val columnSelected = readNextIntWithLimit("PLAYER $playerNumber: Enter a row (1-7)", 1, 7) - 1
             for(i in game.gameField.size - 1 downTo 0){
                 if (game.gameField[i][columnSelected] == 0) {
                     game.gameField[i][columnSelected] = playerNumber
-                    displayField()
+                    displayField(game)
                     return
                 }
             }

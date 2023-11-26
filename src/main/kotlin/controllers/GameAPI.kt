@@ -26,17 +26,14 @@ class GameAPI(serializerType: Serializer) {
             contentToFormat.indexOf(record).toString() + ": " + record.toString() }
     private fun isValidListIndex(index: Int, list: List<Any>): Boolean = index >= 0 && index < list.size
     fun isValidIndexGames(index: Int): Boolean = isValidListIndex(index, games)
-
     fun numberOfGames(): Int = games.size
-
-    fun generateID(): String{
-        return (0..99999).random().toString().padStart(5, '0')
+    fun getGameById(index: Int): Game?{
+        return if(isValidIndexGames(index)) games[index]
+        else null
     }
 
-    fun chechkId(newId: String): Boolean{
-        return !games.any { it.gameId.contains(newId)}
-    }
-
+    fun generateID(): String = (0..99999).random().toString().padStart(5, '0')
+    fun chechkId(newId: String): Boolean = !games.any { it.gameId.contains(newId)}
     fun addId(): String{
         while(true) {
             val newId = generateID()
@@ -47,7 +44,6 @@ class GameAPI(serializerType: Serializer) {
     @Throws(Exception::class)
     fun load() {
         games = serializer.read() as ArrayList<Game>
-
     }
 
     @Throws(Exception::class)
