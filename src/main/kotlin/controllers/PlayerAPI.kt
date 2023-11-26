@@ -58,8 +58,8 @@ class PlayerAPI(serializerType: Serializer){
     fun findPlayerById(playerId: String): Player? =
         players.find {it.playerId == playerId}
 
-    fun selectPlayer(){
-
+    fun updatePlayerNickname(indexToUpdate: Int, newName: String){
+        findPlayer(indexToUpdate)!!.playerName = newName
     }
     @Throws(Exception::class)
     fun load() {

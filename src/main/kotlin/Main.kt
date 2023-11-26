@@ -15,7 +15,6 @@ fun main() {
     runMenu()
 }
 
-
 fun mainMenu(): Int =
      readNextInt(
         """ 
@@ -40,20 +39,18 @@ fun mainMenu(): Int =
          > |   0) Exit                            |
          > ----------------------------------------
          > ==>> """.trimMargin(">"))
-
 fun runMenu() {
-    do when (val option = mainMenu()) {
-        1 -> playGame()
-        2 -> createPlayer()
-        3 -> listAllGames()
-        4 -> listAllPlayers()
-        5 -> searchOption()
-        0 -> exitApp()
-        else -> println("Invalid option entered: $option")
-    }
     while (true)
+        when (val option = mainMenu()) {
+            1 -> playGame()
+            2 -> createPlayer()
+            3 -> listAllGames()
+            4 -> listAllPlayers()
+            5 -> searchOption()
+            0 -> exitApp()
+            else -> println("Invalid option entered: $option")
+        }
 }
-
 
 fun playGame() {
     println(playerAPI.listAllPlayers())
@@ -61,7 +58,6 @@ fun playGame() {
         println("There is no enough players in the system!")
         return
     }
-
     val gameplayController = GameplayController(gameAPI)
     var player1: Player
     var player2: Player
@@ -77,12 +73,10 @@ fun playGame() {
 fun createPlayer() {
     while(true) {
         val playerName = readNextLine("Enter Player name: ")
-        if (playerAPI.addPlayer(Player(playerAPI.addId(),playerName, 0, null))) {
+        if (playerAPI.addPlayer(Player(playerAPI.addId(), playerName, 0, null))) {
             println("Added Successfully!")
             break
-        } else {
-            println("Failed! Please try again.")
-        }
+        } else println("Failed! Please try again.")
     }
 }
 
@@ -132,8 +126,7 @@ fun listAllPlayers() {
     }
 }
 
-fun gameOptions(): Int{
-    return readNextInt("""
+fun gameOptions(): Int = readNextInt("""
         > |-----------------|
         > |  Selected menu  |
         > |-----------------|
@@ -142,9 +135,7 @@ fun gameOptions(): Int{
         > |  0 - exit       |
         > |-----------------|
         > ==>""".trimMargin(">"))
-}
-fun playerOptions(): Int{
-    return readNextInt("""
+fun playerOptions(): Int = readNextInt("""
         > |-----------------|
         > |  Selected menu  |
         > |-----------------|
@@ -153,9 +144,7 @@ fun playerOptions(): Int{
         > |  0 - exit       |
         > |-----------------|
         > ==>""".trimMargin(">"))
-}
-fun playerListOptions(): Int{
-    return  readNextInt("""
+fun playerListOptions(): Int = readNextInt("""
         > |--------------------------------------------|
         > |  Select list option                        |
         > |--------------------------------------------|
@@ -166,9 +155,7 @@ fun playerListOptions(): Int{
         > |--------------------------------------------|
         > ==>
     """.trimMargin(">"))
-}
-fun gameListOptions(): Int{
-    return  readNextInt("""
+fun gameListOptions(): Int = readNextInt("""
         > |--------------------------------------------|
         > |  Select list option                        |
         > |--------------------------------------------|
@@ -178,11 +165,7 @@ fun gameListOptions(): Int{
         > |--------------------------------------------|
         > ==>
     """.trimMargin(">"))
-}
-
-fun searchOption() {
-    do{
-        when(val option: Int = readNextInt("""
+fun searchListOption(): Int = readNextInt("""
         > |----------------------|
         > |   Search menu        |
         > | Type:                |
@@ -191,33 +174,37 @@ fun searchOption() {
         > | 2 - to search player |
         > | 0 - to exit menu     |
         > | ---------------------|
-        > ==>""".trimMargin(">"))) {
+        > ==>""".trimMargin(">"))
+fun updateListPlayer(): Int = readNextInt(""" 
+        >  |-----------------------------|
+        >  | Player update menu          |
+        >  |-----------------------------|
+        >  | 1 - Nickname                |
+        >  | 0 - Exit                    |
+        >  |-----------------------------|
+        ==>""".trimMargin(">"))
+
+fun searchOption() {
+    while(true)
+        when(searchListOption()) {
             1 -> searchGame()
             2 -> searchPlayer()
             0 -> break
-            else -> println("Invalid option entered: $option")
+            else -> println("Invalid option entered.")
         }
-    } while(true)
 }
 
 fun updatePlayer(indexToUpdate: Int) {
-    while (true){
+    while (true)
         if (playerAPI.isValidIndexPlayers(indexToUpdate)) {
             updatePlayerMenu(indexToUpdate)
             break
-        } else {
-            println("Sorry, could not update that!")
-        }
-    }
+        } else println("Sorry, could not update that!")
 }
 fun updatePlayerMenu(indexToUpdate: Int){
     while(true)
-        when(readNextInt(""" 
-        >  | Enter player update option: |
-        >  | 1 - Nickname                |
-        >  | 0 - Exit                    |
-        ==>""".trimMargin(">"))){
-            //1 -> playerAPI.updatePlayer(indexToUpdate, Player(readNextLine("Enter new player name: "), 0, null))
+        when(updateListPlayer()){
+            1 -> playerAPI.updatePlayerNickname(indexToUpdate, readNextLine("Enter new player name: "))
             0 -> break
             else -> println("Invalid option entered.")
         }
@@ -235,36 +222,30 @@ fun searchGame() {
 }
 
 fun selectPlayer(): Player{
-    while(true){
+    while(true) {
         val index = readNextInt("Enter a player index:")
         if (playerAPI.isValidIndexPlayers(index)) return playerAPI.findPlayer(index)!!
         else println("Sorry, invalid index")
     }
 }
 
-
-fun save(){
+fun save() =
     try {
         gameAPI.save()
         playerAPI.save()
     } catch (e: Exception) {
         System.err.println("Error writing to file: $e")
     }
-}
-fun load(){
+fun load() =
     try {
         gameAPI.load()
         playerAPI.load()
     } catch (e: Exception) {
         System.err.println("Error loading from file: $e")
     }
-}
-
 
 fun exitApp() {
     save()
     println("Exiting...bye")
     exitProcess(0)
 }
-
-
