@@ -36,7 +36,6 @@ class PlayerAPI(serializerType: Serializer){
     fun listPlayersByGamesPlayed(): String =
         if(players.isEmpty()) "\u001B[31B No players recorded."
         else formatListString(players.sortedByDescending { it.gamesPlayed?.size })
-
     private fun formatListString(contentToFormat: List<Any>): String =
         contentToFormat.joinToString (separator = "\n"){ record ->
             contentToFormat.indexOf(record).toString() + ": " + record.toString() }
@@ -47,18 +46,21 @@ class PlayerAPI(serializerType: Serializer){
     fun generateID(): String{
         return (0..99999).random().toString().padStart(5, '0')
     }
-
     fun chechkId(newId: String): Boolean{
         return !players.any { it.playerId.contains(newId)}
     }
-
     fun addId(): String{
         while(true) {
             val newId = generateID()
             if (chechkId(newId)){ return newId }
         }
     }
+    fun findPlayerById(playerId: String): Player? =
+        players.find {it.playerId == playerId}
 
+    fun selectPlayer(){
+
+    }
     @Throws(Exception::class)
     fun load() {
         players = serializer.read() as ArrayList<Player>

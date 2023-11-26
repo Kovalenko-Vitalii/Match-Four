@@ -1,19 +1,17 @@
 import controllers.*
-import models.Game
 import models.Player
 import persistence.JSONSerializer
 import utils.Validator.readNextInt
 import utils.Validator.readNextLine
 import java.io.File
-import java.util.*
 import kotlin.system.exitProcess
+
 
 private val gameAPI = GameAPI(JSONSerializer(File("Games.json")))
 private val playerAPI = PlayerAPI(JSONSerializer(File("Players.json")))
 
 fun main() {
     load()
-    println(playerAPI.generateID())
     runMenu()
 }
 
@@ -58,17 +56,23 @@ fun runMenu() {
 }
 
 fun playGame() {
-    val gameField = Array(6) { IntArray(7) }
-    val winnerName = readNextLine("Enter winner name: ")
-
-    val newGame = Game(gameAPI.addId(),gameField,winnerName, 0.0, Array(2){""})
-    val isAdded = gameAPI.addGame(newGame)
-
-    if (isAdded) {
-        println("Added Successfully")
-    } else {
-        println("Failed! Please try again.")
+    println(playerAPI.listAllPlayers())
+    if(playerAPI.numberOfPlayers() < 2) {
+        println("There is no enough players in the system!")
+        return
     }
+
+    val gameplayController = GameplayController(gameAPI)
+    var player1: Player
+    var player2: Player
+    while(true) {
+        player1 = selectPlayer()
+        player2 = selectPlayer()
+        if(player1.playerId != player2.playerId)
+            break
+        else println("Selected players have identical IDs!")
+    }
+    gameplayController.playGame(player1, player2)
 }
 fun createPlayer() {
     while(true) {
@@ -203,7 +207,8 @@ fun updatePlayer(indexToUpdate: Int) {
             break
         } else {
             println("Sorry, could not update that!")
-        }}
+        }
+    }
 }
 fun updatePlayerMenu(indexToUpdate: Int){
     while(true)
@@ -229,6 +234,15 @@ fun searchGame() {
     else println(searchResults)
 }
 
+fun selectPlayer(): Player{
+    while(true){
+        val index = readNextInt("Enter a player index:")
+        if (playerAPI.isValidIndexPlayers(index)) return playerAPI.findPlayer(index)!!
+        else println("Sorry, invalid index")
+    }
+}
+
+
 fun save(){
     try {
         gameAPI.save()
@@ -245,6 +259,7 @@ fun load(){
         System.err.println("Error loading from file: $e")
     }
 }
+
 
 fun exitApp() {
     save()
