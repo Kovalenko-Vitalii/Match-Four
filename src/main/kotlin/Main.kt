@@ -1,4 +1,5 @@
 import controllers.*
+import models.Game
 import models.Player
 import persistence.JSONSerializer
 import utils.Validator.readNextInt
@@ -6,9 +7,9 @@ import utils.Validator.readNextLine
 import java.io.File
 import kotlin.system.exitProcess
 
-
 private val gameAPI = GameAPI(JSONSerializer(File("Games.json")))
 private val playerAPI = PlayerAPI(JSONSerializer(File("Players.json")))
+private var gameplayController: GameplayController? = GameplayController(gameAPI)
 
 fun main() {
     load()
@@ -58,7 +59,6 @@ fun playGame() {
         println("There is no enough players in the system!")
         return
     }
-    val gameplayController = GameplayController(gameAPI)
     var player1: Player
     var player2: Player
     while(true) {
@@ -68,7 +68,7 @@ fun playGame() {
             break
         else println("Selected players have identical IDs!")
     }
-    gameAPI.addGame(gameplayController.playGame(player1, player2))
+    gameAPI.addGame(gameplayController!!.playGame(player1, player2))
 }
 fun createPlayer() {
     while(true) {
@@ -93,7 +93,7 @@ fun listAllGames() {
             while(true)
                 when(gameOptions()){
                     1 -> gameAPI.deleteGame(selectedIndex)
-                    //2 -> gameplayController.displayField(gameAPI.getGameById(selectedIndex))
+                    2 -> gameplayController!!.displayField(gameAPI.getGameById(selectedIndex))
                     0 -> break
                     else -> println("Invalid option")
                 }

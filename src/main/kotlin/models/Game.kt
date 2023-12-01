@@ -5,7 +5,7 @@ data class Game (var gameId: String,
                  var winnerName: String,
                  var time: Double,
                  var opponents: Array<String> = Array(2){""}){
-    override fun toString(): String = "| GAME | id: $gameId | Winner name: $winnerName | Duration: $time"
+    override fun toString(): String = "| GAME | id: $gameId | Winner name: $winnerName | Duration: $time minutes"
 
 }
 
