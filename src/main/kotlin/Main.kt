@@ -5,20 +5,19 @@ import persistence.JSONSerializer
 import utils.Validator.readNextInt
 import utils.Validator.readNextLine
 import java.io.File
-import java.util.*
 import kotlin.system.exitProcess
 
 private val gameAPI = GameAPI(JSONSerializer(File("Games.json")))
 private val playerAPI = PlayerAPI(JSONSerializer(File("Players.json")))
+private var gameplayController: GameplayController? = GameplayController(gameAPI)
 
 fun main() {
     load()
-    println(playerAPI.generateID())
     runMenu()
 }
 
-fun mainMenu(): Int {
-    return readNextInt(
+fun mainMenu(): Int =
+     readNextInt(
         """ 
          > -------------------------------------------------------------------------------------------------------
          > 
@@ -40,11 +39,9 @@ fun mainMenu(): Int {
          > ----------------------------------------
          > |   0) Exit                            |
          > ----------------------------------------
-         > ==>> """.trimMargin(">")
-    )
-}
+         > ==>> """.trimMargin(">"))
 fun runMenu() {
-    do {
+    while (true)
         when (val option = mainMenu()) {
             1 -> playGame()
             2 -> createPlayer()
@@ -54,31 +51,32 @@ fun runMenu() {
             0 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
-    } while (true)
 }
 
 fun playGame() {
-    val gameField = Array(6) { IntArray(7) }
-    val winnerName = readNextLine("Enter winner name: ")
-
-    val newGame = Game(gameAPI.addId(),gameField,winnerName, 0.0, Array(2){""})
-    val isAdded = gameAPI.addGame(newGame)
-
-    if (isAdded) {
-        println("Added Successfully")
-    } else {
-        println("Failed! Please try again.")
+    println(playerAPI.listAllPlayers())
+    if(playerAPI.numberOfPlayers() < 2) {
+        println("There is no enough players in the system!")
+        return
     }
+    var player1: Player
+    var player2: Player
+    while(true) {
+        player1 = selectPlayer()
+        player2 = selectPlayer()
+        if(player1.playerId != player2.playerId)
+            break
+        else println("Selected players have identical IDs!")
+    }
+    gameAPI.addGame(gameplayController!!.playGame(player1, player2))
 }
 fun createPlayer() {
     while(true) {
         val playerName = readNextLine("Enter Player name: ")
-        if (playerAPI.addPlayer(Player(playerAPI.addId(),playerName, 0, null))) {
+        if (playerAPI.addPlayer(Player(playerAPI.addId(), playerName, 0, null))) {
             println("Added Successfully!")
             break
-        } else {
-            println("Failed! Please try again.")
-        }
+        } else println("Failed! Please try again.")
     }
 }
 
@@ -91,12 +89,11 @@ fun listAllGames() {
             else -> println("Invalid option")
         }
         val selectedIndex = readNextInt(" Enter index of player to select or -1 to exit:")
-
         if (playerAPI.isValidIndexPlayers(selectedIndex))
             while(true)
                 when(gameOptions()){
                     1 -> gameAPI.deleteGame(selectedIndex)
-                    2 -> println("Viewing game. . .")
+                    2 -> gameplayController!!.displayField(gameAPI.getGameById(selectedIndex))
                     0 -> break
                     else -> println("Invalid option")
                 }
@@ -128,8 +125,7 @@ fun listAllPlayers() {
     }
 }
 
-fun gameOptions(): Int{
-    return readNextInt("""
+fun gameOptions(): Int = readNextInt("""
         > |-----------------|
         > |  Selected menu  |
         > |-----------------|
@@ -138,9 +134,7 @@ fun gameOptions(): Int{
         > |  0 - exit       |
         > |-----------------|
         > ==>""".trimMargin(">"))
-}
-fun playerOptions(): Int{
-    return readNextInt("""
+fun playerOptions(): Int = readNextInt("""
         > |-----------------|
         > |  Selected menu  |
         > |-----------------|
@@ -149,9 +143,7 @@ fun playerOptions(): Int{
         > |  0 - exit       |
         > |-----------------|
         > ==>""".trimMargin(">"))
-}
-fun playerListOptions(): Int{
-    return  readNextInt("""
+fun playerListOptions(): Int = readNextInt("""
         > |--------------------------------------------|
         > |  Select list option                        |
         > |--------------------------------------------|
@@ -162,9 +154,7 @@ fun playerListOptions(): Int{
         > |--------------------------------------------|
         > ==>
     """.trimMargin(">"))
-}
-fun gameListOptions(): Int{
-    return  readNextInt("""
+fun gameListOptions(): Int = readNextInt("""
         > |--------------------------------------------|
         > |  Select list option                        |
         > |--------------------------------------------|
@@ -174,11 +164,7 @@ fun gameListOptions(): Int{
         > |--------------------------------------------|
         > ==>
     """.trimMargin(">"))
-}
-
-fun searchOption() {
-    do{
-        when(val option: Int = readNextInt("""
+fun searchListOption(): Int = readNextInt("""
         > |----------------------|
         > |   Search menu        |
         > | Type:                |
@@ -187,32 +173,37 @@ fun searchOption() {
         > | 2 - to search player |
         > | 0 - to exit menu     |
         > | ---------------------|
-        > ==>""".trimMargin(">"))) {
+        > ==>""".trimMargin(">"))
+fun updateListPlayer(): Int = readNextInt(""" 
+        >  |-----------------------------|
+        >  | Player update menu          |
+        >  |-----------------------------|
+        >  | 1 - Nickname                |
+        >  | 0 - Exit                    |
+        >  |-----------------------------|
+        ==>""".trimMargin(">"))
+
+fun searchOption() {
+    while(true)
+        when(searchListOption()) {
             1 -> searchGame()
             2 -> searchPlayer()
             0 -> break
-            else -> println("Invalid option entered: $option")
+            else -> println("Invalid option entered.")
         }
-    } while(true)
 }
 
 fun updatePlayer(indexToUpdate: Int) {
-    while (true){
+    while (true)
         if (playerAPI.isValidIndexPlayers(indexToUpdate)) {
             updatePlayerMenu(indexToUpdate)
             break
-        } else {
-            println("Sorry, could not update that!")
-        }}
+        } else println("Sorry, could not update that!")
 }
 fun updatePlayerMenu(indexToUpdate: Int){
     while(true)
-        when(readNextInt(""" 
-        >  | Enter player update option: |
-        >  | 1 - Nickname                |
-        >  | 0 - Exit                    |
-        ==>""".trimMargin(">"))){
-            //1 -> playerAPI.updatePlayer(indexToUpdate, Player(readNextLine("Enter new player name: "), 0, null))
+        when(updateListPlayer()){
+            1 -> playerAPI.updatePlayerNickname(indexToUpdate, readNextLine("Enter new player name: "))
             0 -> break
             else -> println("Invalid option entered.")
         }
@@ -229,27 +220,31 @@ fun searchGame() {
     else println(searchResults)
 }
 
-fun save(){
+fun selectPlayer(): Player{
+    while(true) {
+        val index = readNextInt("Enter a player index:")
+        if (playerAPI.isValidIndexPlayers(index)) return playerAPI.findPlayer(index)!!
+        else println("Sorry, invalid index")
+    }
+}
+
+fun save() =
     try {
         gameAPI.save()
         playerAPI.save()
     } catch (e: Exception) {
         System.err.println("Error writing to file: $e")
     }
-}
-fun load(){
+fun load() =
     try {
         gameAPI.load()
         playerAPI.load()
     } catch (e: Exception) {
         System.err.println("Error loading from file: $e")
     }
-}
 
 fun exitApp() {
     save()
     println("Exiting...bye")
     exitProcess(0)
 }
-
-

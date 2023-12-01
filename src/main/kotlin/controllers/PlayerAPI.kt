@@ -2,25 +2,15 @@ package controllers
 
 import models.*
 import persistence.Serializer
-import kotlin.random.Random
 
 class PlayerAPI(serializerType: Serializer){
     private var players = ArrayList<Player>()
-    private var serializer: Serializer = serializerType
+    private var serializer = serializerType
 
     fun addPlayer(player: Player) = players.add(player)
     fun deletePlayer(indexToDelete: Int): Player? =
         if(isValidListIndex(indexToDelete, players)) players.removeAt(indexToDelete)
         else null
-    fun updatePlayer(indexToUpdate: Int, player: Player?): Boolean {
-        val foundPlayer = findPlayer(indexToUpdate)
-
-        if ((foundPlayer != null) && (player != null)) {
-            foundPlayer.playerName = player.playerName
-            return true
-        }
-        return false
-    }
     fun findPlayer(index: Int): Player? =
         if (isValidListIndex(index, players)) players[index]
         else null
@@ -44,13 +34,8 @@ class PlayerAPI(serializerType: Serializer){
     fun isValidIndexPlayers(index: Int): Boolean = isValidListIndex(index, players)
     fun numberOfPlayers(): Int = players.size
 
-    fun generateID(): String{
-        return (0..99999).random().toString().padStart(5, '0')
-    }
-
-    fun chechkId(newId: String): Boolean{
-        return !players.any { it.playerId.contains(newId)}
-    }
+    fun generateID(): String = (0..99999).random().toString().padStart(5, '0')
+    fun chechkId(newId: String): Boolean = !players.any { it.playerId.contains(newId)}
 
     fun addId(): String{
         while(true) {
@@ -58,11 +43,15 @@ class PlayerAPI(serializerType: Serializer){
             if (chechkId(newId)){ return newId }
         }
     }
+    fun findPlayerById(playerId: String): Player? =
+        players.find {it.playerId == playerId}
 
+    fun updatePlayerNickname(indexToUpdate: Int, newName: String){
+        findPlayer(indexToUpdate)!!.playerName = newName
+    }
     @Throws(Exception::class)
     fun load() {
         players = serializer.read() as ArrayList<Player>
-
     }
     @Throws(Exception::class)
     fun save() {
