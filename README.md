@@ -33,3 +33,7 @@ To run the Match Four game:
 5. Make moves by specifying column numbers to drop tokens.
 
 ## Gallery
+
+![image](https://github.com/Kovalenko-Vitalii/Match-Four/assets/117904907/6422ead2-3292-4014-878b-1584f7ce6891)
+![image](https://github.com/Kovalenko-Vitalii/Match-Four/assets/117904907/ac3d7ae4-1f0c-43a0-8021-3c7cf34f7131)
+
