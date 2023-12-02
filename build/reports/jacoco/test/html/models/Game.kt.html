@@ -1,12 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Game.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Match-Four</a> &gt; <a href="index.source.html" class="el_package">models</a> &gt; <span class="el_source">Game.kt</span></div><h1>Game.kt</h1><pre class="source lang-java linenums">package models
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Game.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Match-Four</a> &gt; <a href="index.source.html" class="el_package">models</a> &gt; <span class="el_source">Game.kt</span></div><h1>Game.kt</h1><pre class="source lang-java linenums">/**
+ * Represents a game entity.
+ * - Contains game-specific attributes such as ID, game field, winner name, duration, and opponents.
+ * - Provides a string representation of a game instance.
+ */
+package models
 
-<span class="pc" id="L3">data class Game(</span>
-<span class="pc" id="L4">    var gameId: String,</span>
-<span class="pc bnc" id="L5" title="All 2 branches missed.">    var gameField: Array&lt;IntArray&gt; = Array(6, { IntArray(7) }),</span>
-<span class="pc" id="L6">    var winnerName: String,</span>
-<span class="pc" id="L7">    var time: Double,</span>
-<span class="pc bnc" id="L8" title="All 2 branches missed.">    var opponents: Array&lt;String&gt; = Array(2) { &quot;&quot; }</span>
+<span class="pc" id="L8">data class Game(</span>
+<span class="pc" id="L9">    var gameId: String, // Unique ID for the game</span>
+<span class="pc bnc" id="L10" title="All 2 branches missed.">    var gameField: Array&lt;IntArray&gt; = Array(6, { IntArray(7) }), // Represents the game field</span>
+<span class="pc" id="L11">    var winnerName: String, // Name of the game winner</span>
+<span class="pc" id="L12">    var time: Double, // Duration of the game in minutes</span>
+<span class="pc bnc" id="L13" title="All 2 branches missed.">    var opponents: Array&lt;String&gt; = Array(2) { &quot;&quot; } // Array containing opponent IDs</span>
 ) {
-<span class="fc" id="L10">    override fun toString(): String = &quot;| GAME | id: $gameId | Winner name: $winnerName | Duration: $time minutes&quot;</span>
-<span class="nc" id="L11">}</span>
+    /**
+     * Provides a string representation of a game instance.
+     * @return String A formatted string describing the game.
+     */
+<span class="fc" id="L19">    override fun toString(): String = &quot;| GAME | id: $gameId | Winner name: $winnerName | Duration: $time minutes&quot;</span>
+<span class="nc" id="L20">}</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

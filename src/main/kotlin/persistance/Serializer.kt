@@ -1,4 +1,4 @@
-package persistence
+package persistance
 
 /**
  * Interface for serializing and deserializing objects.

@@ -1,4 +1,4 @@
-package utils
+package utilities
 
 import java.lang.NumberFormatException
 import java.util.Scanner

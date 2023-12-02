@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JSONSerializer.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Match-Four</a> &gt; <a href="index.source.html" class="el_package">persistance</a> &gt; <span class="el_source">JSONSerializer.kt</span></div><h1>JSONSerializer.kt</h1><pre class="source lang-java linenums">package persistance
+
+import com.thoughtworks.xstream.XStream
+import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver
+import models.Game
+import models.Player
+import java.io.File
+import java.io.FileReader
+import java.io.FileWriter
+
+/**
+ * A serializer implementation using JSON format for object serialization/deserialization.
+ *
+ * @property file The file where data will be stored.
+ */
+<span class="fc" id="L16">class JSONSerializer(private val file: File) : Serializer {</span>
+
+    /**
+     * Reads and deserializes data from the specified file.
+     *
+     * @return The deserialized data.
+     * @throws Exception If there is an error during the reading process.
+     */
+    @Throws(Exception::class)
+    override fun read(): Any {
+<span class="fc" id="L26">        val xStream = XStream(JettisonMappedXmlDriver())</span>
+<span class="fc" id="L27">        xStream.allowTypes(arrayOf(Game::class.java, Player::class.java))</span>
+<span class="fc" id="L28">        val inputStream = xStream.createObjectInputStream(FileReader(file))</span>
+<span class="fc" id="L29">        val obj = inputStream.readObject() as Any</span>
+<span class="fc" id="L30">        inputStream.close()</span>
+<span class="fc" id="L31">        return obj</span>
+    }
+
+    /**
+     * Serializes and writes the provided object to the specified file.
+     *
+     * @param obj The object to be serialized and written.
+     * @throws Exception If there is an error during the writing process.
+     */
+    @Throws(Exception::class)
+    override fun write(obj: Any?) {
+<span class="fc" id="L42">        val xStream = XStream(JettisonMappedXmlDriver())</span>
+<span class="fc" id="L43">        val outputStream = xStream.createObjectOutputStream(FileWriter(file))</span>
+<span class="fc" id="L44">        outputStream.writeObject(obj)</span>
+<span class="fc" id="L45">        outputStream.close()</span>
+<span class="fc" id="L46">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

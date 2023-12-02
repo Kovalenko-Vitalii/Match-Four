@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import persistence.JSONSerializer
+import persistance.JSONSerializer
+import persistance.XMLSerializer
 import java.io.File
 import kotlin.test.assertEquals
 class MainTest {
@@ -204,6 +205,61 @@ class MainTest {
             storingPlayers.save()
 
             val loadedPlayers = PlayerAPI(JSONSerializer(File("playersSaved.json")))
+            loadedPlayers.load()
+            assertEquals(3, loadedPlayers.numberOfPlayers())
+            assertEquals(3, storingPlayers.numberOfPlayers())
+        }
+
+        @Test
+        fun `saving and loading an empty games collection in XML doesn't crash app`() {
+            val storingGames = GameAPI(XMLSerializer(File("gamesSaved.xml")))
+            storingGames.save()
+
+            val loadedGames = GameAPI(XMLSerializer(File("gamesSaved.xml")))
+            loadedGames.load()
+
+            assertEquals(0, storingGames.numberOfGames())
+            assertEquals(0, loadedGames.numberOfGames())
+        }
+
+        @Test
+        fun `saving and loading an empty players collection in XML doesn't crash app`() {
+            val storingPlayers = PlayerAPI(XMLSerializer(File("playersSaved.xml")))
+            storingPlayers.save()
+
+            val loadedPlayers = PlayerAPI(XMLSerializer(File("playersSaved.xml")))
+            loadedPlayers.load()
+
+            assertEquals(0, storingPlayers.numberOfPlayers())
+            assertEquals(0, loadedPlayers.numberOfPlayers())
+        }
+
+        @Test
+        fun `saving and loading an loaded gamescollection in XML doesn't loose data`() {
+            val storingGames = GameAPI(JSONSerializer(File("gamesSaved.xml")))
+            storingGames.addGame(game1!!)
+            storingGames.addGame(game2!!)
+            storingGames.addGame(game3!!)
+            storingGames.addGame(game4!!)
+            storingGames.addGame(game5!!)
+            storingGames.addGame(game6!!)
+            storingGames.save()
+
+            val loadedGames = GameAPI(JSONSerializer(File("gamesSaved.xml")))
+            loadedGames.load()
+            assertEquals(6, loadedGames.numberOfGames())
+            assertEquals(6, storingGames.numberOfGames())
+        }
+
+        @Test
+        fun `saving and loading an loaded player collection in XML doesn't loose data`() {
+            val storingPlayers = PlayerAPI(JSONSerializer(File("playersSaved.xml")))
+            storingPlayers.addPlayer(player1!!)
+            storingPlayers.addPlayer(player2!!)
+            storingPlayers.addPlayer(player3!!)
+            storingPlayers.save()
+
+            val loadedPlayers = PlayerAPI(JSONSerializer(File("playersSaved.xml")))
             loadedPlayers.load()
             assertEquals(3, loadedPlayers.numberOfPlayers())
             assertEquals(3, storingPlayers.numberOfPlayers())
