@@ -15,11 +15,11 @@ import java.io.File
 import kotlin.system.exitProcess
 
 // APIs and controllers for game and player management
-<span class="nc" id="L18">private val gameAPI = GameAPI(JSONSerializer(File(&quot;Games.json&quot;)))</span>
-<span class="nc" id="L19">private val playerAPI = PlayerAPI(JSONSerializer(File(&quot;Players.json&quot;)))</span>
+<span class="nc" id="L18">private val gameAPI = GameAPI(JSONSerializer(File(&quot;saves/&quot;, &quot;Games.json&quot;)))</span>
+<span class="nc" id="L19">private val playerAPI = PlayerAPI(JSONSerializer(File(&quot;saves/&quot;, &quot;Players.json&quot;)))</span>
 
-// private val gameAPI = GameAPI(XMLSerializer(File(&quot;Games.xml&quot;)))
-// private val playerAPI = PlayerAPI(XMLSerializer(File(&quot;Players.xml&quot;)))
+// private val gameAPI = GameAPI(XMLSerializer(File(&quot;saves/&quot;, &quot;Games.xml&quot;)))
+// private val playerAPI = PlayerAPI(XMLSerializer(File(&quot;saves/&quot;, &quot;Players.xml&quot;)))
 
 <span class="nc" id="L24">private var gameplayController: GameplayController? = GameplayController(gameAPI)</span>
 
