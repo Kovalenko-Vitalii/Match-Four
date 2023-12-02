@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="controllers.MainTest$Updating" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-12-02T11:00:59" hostname="LAPTOP-BKGB23SF" time="0.001">
+  <properties/>
+  <testcase name="Updating player name()" classname="controllers.MainTest$Updating" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

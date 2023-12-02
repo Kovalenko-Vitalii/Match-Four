@@ -1,5 +1,7 @@
 plugins {
     kotlin("jvm") version "1.9.0"
+    id("org.jetbrains.dokka") version "1.9.10"
+    application
 }
 
 group = "org.example"
@@ -20,6 +22,11 @@ dependencies {
     //For Streaming to XML and JSON
     implementation("com.thoughtworks.xstream:xstream:1.4.18")
     implementation("org.codehaus.jettison:jettison:1.4.1")
+
+    // https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-gradle-plugin
+    implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.9.10")
+
+
 }
 
 tasks.test {
