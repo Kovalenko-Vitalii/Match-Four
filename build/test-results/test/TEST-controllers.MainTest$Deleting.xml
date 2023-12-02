@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="controllers.MainTest$Deleting" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-12-02T11:26:25" hostname="LAPTOP-BKGB23SF" time="0.015">
+<testsuite name="controllers.MainTest$Deleting" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-12-02T13:59:52" hostname="LAPTOP-BKGB23SF" time="0.011">
   <properties/>
-  <testcase name="Deleting non existing player()" classname="controllers.MainTest$Deleting" time="0.004"/>
-  <testcase name="Deleting game()" classname="controllers.MainTest$Deleting" time="0.002"/>
+  <testcase name="Deleting non existing player()" classname="controllers.MainTest$Deleting" time="0.003"/>
+  <testcase name="Deleting game()" classname="controllers.MainTest$Deleting" time="0.001"/>
   <testcase name="Deleting player()" classname="controllers.MainTest$Deleting" time="0.001"/>
-  <testcase name="Deleting non existing game()" classname="controllers.MainTest$Deleting" time="0.001"/>
+  <testcase name="Deleting non existing game()" classname="controllers.MainTest$Deleting" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

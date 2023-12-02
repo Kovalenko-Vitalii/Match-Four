@@ -4,11 +4,10 @@ import models.Game
 import models.Player
 import utils.Validator.readNextIntWithLimit
 
-
-//It`s fine to have a println`s here Siobhan said
-class GameplayController(val gameAPI: GameAPI){
-    fun playGame(player1: Player, player2: Player): Game{
-        val game = Game(gameAPI.addId(), Array(6,{IntArray(7)}), "", 0.0, arrayOf("", ""))
+// It`s fine to have a println`s here Siobhan said
+class GameplayController(val gameAPI: GameAPI) {
+    fun playGame(player1: Player, player2: Player): Game {
+        val game = Game(gameAPI.addId(), Array(6, { IntArray(7) }), "", 0.0, arrayOf("", ""))
         game.opponents = arrayOf(player1.playerId, player2.playerId)
         player1.gamesPlayed?.add(game.gameId)
         player2.gamesPlayed?.add(game.gameId)
@@ -21,9 +20,9 @@ class GameplayController(val gameAPI: GameAPI){
     private fun gameRunning(player1: Player, player2: Player, game: Game) {
         while (true) {
             println(placeToken(1, game))
-            if(checkGame(game)) {player1.gamesWon++; game.winnerName = player1.playerName; break}
+            if (checkGame(game)) { player1.gamesWon++; game.winnerName = player1.playerName; break }
             println(placeToken(2, game))
-            if(checkGame(game)) {player2.gamesWon++; game.winnerName = player2.playerName; break}
+            if (checkGame(game)) { player2.gamesWon++; game.winnerName = player2.playerName; break }
         }
     }
     fun displayField(game: Game?) {
@@ -42,7 +41,7 @@ class GameplayController(val gameAPI: GameAPI){
         }
     }
     private fun checkLine(player: Int, game: Game): Boolean {
-        //Check horizontal
+        // Check horizontal
         for (row in 0 until 6) {
             for (col in 0 until 4) {
                 if (game.gameField[row][col] == player &&
@@ -54,7 +53,7 @@ class GameplayController(val gameAPI: GameAPI){
                 }
             }
         }
-        //Check vertical
+        // Check vertical
         for (col in 0 until 7) {
             for (row in 0 until 3) {
                 if (game.gameField[row][col] == player &&
@@ -66,7 +65,7 @@ class GameplayController(val gameAPI: GameAPI){
                 }
             }
         }
-        //Check diagonals
+        // Check diagonals
         for (row in 0 until 3) {
             for (col in 0 until 4) {
                 if (game.gameField[row][col] == player &&
@@ -91,22 +90,21 @@ class GameplayController(val gameAPI: GameAPI){
         }
         return false
     }
-    private fun checkGame(game: Game): Boolean{
-        if(checkLine(1, game)){
+    private fun checkGame(game: Game): Boolean {
+        if (checkLine(1, game)) {
             println("Player 1 has won this game!")
             return true
-        }
-        else if(checkLine(2, game)){
+        } else if (checkLine(2, game)) {
             println("Player 2 has won this game!")
             return true
         }
         return false
     }
-    private fun placeToken(playerNumber: Int, game: Game){
+    private fun placeToken(playerNumber: Int, game: Game) {
         displayField(game)
-        while(true){
+        while (true) {
             val columnSelected = readNextIntWithLimit("PLAYER $playerNumber: Enter a row (1-7)", 1, 7) - 1
-            for(i in game.gameField.size - 1 downTo 0){
+            for (i in game.gameField.size - 1 downTo 0) {
                 if (game.gameField[i][columnSelected] == 0) {
                     game.gameField[i][columnSelected] = playerNumber
                     displayField(game)
