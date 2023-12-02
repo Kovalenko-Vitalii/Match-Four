@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlayerAPI.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Match-Four</a> &gt; <a href="index.source.html" class="el_package">controllers</a> &gt; <span class="el_source">PlayerAPI.kt</span></div><h1>PlayerAPI.kt</h1><pre class="source lang-java linenums">package controllers
+
+import models.*
+import persistence.Serializer
+
+<span class="fc" id="L6">class PlayerAPI(serializerType: Serializer){</span>
+<span class="fc" id="L7">    private var players = ArrayList&lt;Player&gt;()</span>
+<span class="fc" id="L8">    private var serializer = serializerType</span>
+
+<span class="fc" id="L10">    fun addPlayer(player: Player) = players.add(player)</span>
+    fun deletePlayer(indexToDelete: Int): Player? =
+<span class="fc bfc" id="L12" title="All 2 branches covered.">        if(isValidListIndex(indexToDelete, players)) players.removeAt(indexToDelete)</span>
+<span class="fc" id="L13">        else null</span>
+    fun findPlayer(index: Int): Player? =
+<span class="pc bpc" id="L15" title="1 of 2 branches missed.">        if (isValidListIndex(index, players)) players[index]</span>
+<span class="pc" id="L16">        else null</span>
+    fun searchPlayerByTitle(searchString: String) : String =
+<span class="nc" id="L18">        formatListString(players.filter {player -&gt; player.playerName.contains(searchString, ignoreCase = true)})</span>
+
+    fun listAllPlayers(): String =
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        if(players.isEmpty()) &quot;\u001B[31B No players recorded.&quot;</span>
+<span class="fc" id="L22">        else formatListString(players)</span>
+    fun listPlayersByVictoriesAmount(): String =
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        if(players.isEmpty()) &quot;\u001B[31B No players recorded.&quot;</span>
+<span class="nc" id="L25">        else formatListString(players.sortedByDescending { it.gamesWon })</span>
+    fun listPlayersByGamesPlayed(): String =
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        if(players.isEmpty()) &quot;\u001B[31B No players recorded.&quot;</span>
+<span class="nc" id="L28">        else formatListString(players.sortedByDescending { it.gamesPlayed?.size })</span>
+
+    private fun formatListString(contentToFormat: List&lt;Any&gt;): String =
+<span class="fc" id="L31">        contentToFormat.joinToString (separator = &quot;\n&quot;){ record -&gt;</span>
+<span class="fc" id="L32">            contentToFormat.indexOf(record).toString() + &quot;: &quot; + record.toString() }</span>
+<span class="pc bpc" id="L33" title="1 of 4 branches missed.">    private fun isValidListIndex(index: Int, list: List&lt;Any&gt;): Boolean = index &gt;= 0 &amp;&amp; index &lt; list.size</span>
+<span class="nc" id="L34">    fun isValidIndexPlayers(index: Int): Boolean = isValidListIndex(index, players)</span>
+<span class="fc" id="L35">    fun numberOfPlayers(): Int = players.size</span>
+
+<span class="nc" id="L37">    fun generateID(): String = (0..99999).random().toString().padStart(5, '0')</span>
+<span class="nc" id="L38">    fun chechkId(newId: String): Boolean = !players.any { it.playerId.contains(newId)}</span>
+
+    fun addId(): String{
+<span class="nc" id="L41">        while(true) {</span>
+<span class="nc" id="L42">            val newId = generateID()</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">            if (chechkId(newId)){ return newId }</span>
+        }
+    }
+    fun findPlayerById(playerId: String): Player? =
+<span class="nc bnc" id="L47" title="All 4 branches missed.">        players.find {it.playerId == playerId}</span>
+
+    fun updatePlayerNickname(indexToUpdate: Int, newName: String){
+<span class="fc" id="L50">        findPlayer(indexToUpdate)!!.playerName = newName</span>
+<span class="fc" id="L51">    }</span>
+    @Throws(Exception::class)
+    fun load() {
+<span class="fc" id="L54">        players = serializer.read() as ArrayList&lt;Player&gt;</span>
+<span class="fc" id="L55">    }</span>
+    @Throws(Exception::class)
+    fun save() {
+<span class="fc" id="L58">        serializer.write(players)</span>
+<span class="fc" id="L59">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

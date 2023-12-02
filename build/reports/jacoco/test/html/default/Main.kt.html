@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Match-Four</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Main.kt</span></div><h1>Main.kt</h1><pre class="source lang-java linenums">import controllers.*
+import models.Game
+import models.Player
+import persistence.JSONSerializer
+import utils.Validator.readNextInt
+import utils.Validator.readNextLine
+import java.io.File
+import kotlin.system.exitProcess
+
+<span class="nc" id="L10">private val gameAPI = GameAPI(JSONSerializer(File(&quot;Games.json&quot;)))</span>
+<span class="nc" id="L11">private val playerAPI = PlayerAPI(JSONSerializer(File(&quot;Players.json&quot;)))</span>
+<span class="nc" id="L12">private var gameplayController: GameplayController? = GameplayController(gameAPI)</span>
+
+fun main() {
+<span class="nc" id="L15">    load()</span>
+<span class="nc" id="L16">    runMenu()</span>
+<span class="nc" id="L17">}</span>
+
+fun mainMenu(): Int =
+<span class="nc" id="L20">     readNextInt(</span>
+        &quot;&quot;&quot; 
+         &gt; -------------------------------------------------------------------------------------------------------
+         &gt; 
+         &gt;  .___  ___.      ___   .___________.  ______  __    __      _______   ______    __    __  .______      
+         &gt;  |   \/   |     /   \  |           | /      ||  |  |  |    |   ____| /  __  \  |  |  |  | |   _  \     
+         &gt;  |  \  /  |    /  ^  \ `---|  |----`|  ,----'|  |__|  |    |  |__   |  |  |  | |  |  |  | |  |_)  |    
+         &gt;  |  |\/|  |   /  /_\  \    |  |     |  |     |   __   |    |   __|  |  |  |  | |  |  |  | |      /     
+         &gt;  |  |  |  |  /  _____  \   |  |     |  `----.|  |  |  |    |  |     |  `--'  | |  `--'  | |  |\  \----.
+         &gt;  |__|  |__| /__/     \__\  |__|      \______||__|  |__|    |__|      \______/   \______/  | _| `._____|
+         &gt;  
+         &gt; -------------------------------------------------------------------------------------------------------
+         &gt; | MENU:                                |
+         &gt; |                                      |
+         &gt; |   1) Play a game                     |
+         &gt; |   2) Create player                   |
+         &gt; |   3) List games                      |
+         &gt; |   4) List players                    |
+         &gt; |   5) Search a game/player            |
+         &gt; ----------------------------------------
+         &gt; |   0) Exit                            |
+         &gt; ----------------------------------------
+<span class="nc" id="L42">         &gt; ==&gt;&gt; &quot;&quot;&quot;.trimMargin(&quot;&gt;&quot;))</span>
+fun runMenu() {
+<span class="nc" id="L44">    while (true)</span>
+<span class="nc bnc" id="L45" title="All 7 branches missed.">        when (val option = mainMenu()) {</span>
+<span class="nc" id="L46">            1 -&gt; playGame()</span>
+<span class="nc" id="L47">            2 -&gt; createPlayer()</span>
+<span class="nc" id="L48">            3 -&gt; listAllGames()</span>
+<span class="nc" id="L49">            4 -&gt; listAllPlayers()</span>
+<span class="nc" id="L50">            5 -&gt; searchOption()</span>
+<span class="nc" id="L51">            0 -&gt; exitApp()</span>
+<span class="nc" id="L52">            else -&gt; println(&quot;Invalid option entered: $option&quot;)</span>
+        }
+}
+
+fun playGame() {
+<span class="nc" id="L57">    println(playerAPI.listAllPlayers())</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">    if(playerAPI.numberOfPlayers() &lt; 2) {</span>
+<span class="nc" id="L59">        println(&quot;There is no enough players in the system!&quot;)</span>
+<span class="nc" id="L60">        return</span>
+    }
+    var player1: Player
+    var player2: Player
+<span class="nc" id="L64">    while(true) {</span>
+<span class="nc" id="L65">        player1 = selectPlayer()</span>
+<span class="nc" id="L66">        player2 = selectPlayer()</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if(player1.playerId != player2.playerId)</span>
+<span class="nc" id="L68">            break</span>
+<span class="nc" id="L69">        else println(&quot;Selected players have identical IDs!&quot;)</span>
+    }
+<span class="nc" id="L71">    gameAPI.addGame(gameplayController!!.playGame(player1, player2))</span>
+<span class="nc" id="L72">}</span>
+fun createPlayer() {
+<span class="nc" id="L74">    while(true) {</span>
+<span class="nc" id="L75">        val playerName = readNextLine(&quot;Enter Player name: &quot;)</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (playerAPI.addPlayer(Player(playerAPI.addId(), playerName, 0, null))) {</span>
+<span class="nc" id="L77">            println(&quot;Added Successfully!&quot;)</span>
+<span class="nc" id="L78">            break</span>
+<span class="nc" id="L79">        } else println(&quot;Failed! Please try again.&quot;)</span>
+    }
+<span class="nc" id="L81">}</span>
+
+fun listAllGames() {
+<span class="nc" id="L84">    while(true){</span>
+<span class="nc bnc" id="L85" title="All 4 branches missed.">        when(gameListOptions()){</span>
+<span class="nc" id="L86">            1 -&gt; println(gameAPI.listAllGames())</span>
+<span class="nc" id="L87">            2 -&gt; println(gameAPI.listGamesByTime())</span>
+<span class="nc" id="L88">            0 -&gt; break</span>
+<span class="nc" id="L89">            else -&gt; println(&quot;Invalid option&quot;)</span>
+        }
+<span class="nc" id="L91">        val selectedIndex = readNextInt(&quot; Enter index of player to select or -1 to exit:&quot;)</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        if (playerAPI.isValidIndexPlayers(selectedIndex))</span>
+<span class="nc" id="L93">            while(true)</span>
+<span class="nc bnc" id="L94" title="All 4 branches missed.">                when(gameOptions()){</span>
+<span class="nc" id="L95">                    1 -&gt; gameAPI.deleteGame(selectedIndex)</span>
+<span class="nc" id="L96">                    2 -&gt; gameplayController!!.displayField(gameAPI.getGameById(selectedIndex))</span>
+<span class="nc" id="L97">                    0 -&gt; break</span>
+<span class="nc" id="L98">                    else -&gt; println(&quot;Invalid option&quot;)</span>
+                }
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        else if (selectedIndex == -1) break</span>
+<span class="nc" id="L101">        else println(&quot;Invalid index!&quot;)</span>
+    }
+<span class="nc" id="L103">}</span>
+fun listAllPlayers() {
+<span class="nc" id="L105">    while(true){</span>
+<span class="nc bnc" id="L106" title="All 5 branches missed.">        when(playerListOptions()){</span>
+<span class="nc" id="L107">            1 -&gt; println(playerAPI.listAllPlayers())</span>
+<span class="nc" id="L108">            2 -&gt; println(playerAPI.listPlayersByVictoriesAmount())</span>
+<span class="nc" id="L109">            3 -&gt; println(playerAPI.listPlayersByGamesPlayed())</span>
+<span class="nc" id="L110">            0 -&gt; break</span>
+<span class="nc" id="L111">            else -&gt; println(&quot;Invalid option&quot;)</span>
+        }
+<span class="nc" id="L113">        val selectedIndex = readNextInt(&quot; Enter index of player to select or -1 to exit:&quot;)</span>
+
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        if (playerAPI.isValidIndexPlayers(selectedIndex))</span>
+<span class="nc" id="L116">            while(true)</span>
+<span class="nc bnc" id="L117" title="All 4 branches missed.">                when(playerOptions()){</span>
+<span class="nc" id="L118">                    1 -&gt; playerAPI.deletePlayer(selectedIndex)</span>
+<span class="nc" id="L119">                    2 -&gt; updatePlayer(selectedIndex)</span>
+<span class="nc" id="L120">                    0 -&gt; break</span>
+<span class="nc" id="L121">                    else -&gt; println(&quot;Invalid option&quot;)</span>
+                }
+<span class="nc bnc" id="L123" title="All 2 branches missed.">        else if (selectedIndex == -1) break</span>
+<span class="nc" id="L124">        else println(&quot;Invalid index!&quot;)</span>
+    }
+<span class="nc" id="L126">}</span>
+
+<span class="nc" id="L128">fun gameOptions(): Int = readNextInt(&quot;&quot;&quot;</span>
+        &gt; |-----------------|
+        &gt; |  Selected menu  |
+        &gt; |-----------------|
+        &gt; |  1 - delete     |
+        &gt; |  2 - view game  |
+        &gt; |  0 - exit       |
+        &gt; |-----------------|
+<span class="nc" id="L136">        &gt; ==&gt;&quot;&quot;&quot;.trimMargin(&quot;&gt;&quot;))</span>
+<span class="nc" id="L137">fun playerOptions(): Int = readNextInt(&quot;&quot;&quot;</span>
+        &gt; |-----------------|
+        &gt; |  Selected menu  |
+        &gt; |-----------------|
+        &gt; |  1 - delete     |
+        &gt; |  2 - update     |
+        &gt; |  0 - exit       |
+        &gt; |-----------------|
+<span class="nc" id="L145">        &gt; ==&gt;&quot;&quot;&quot;.trimMargin(&quot;&gt;&quot;))</span>
+<span class="nc" id="L146">fun playerListOptions(): Int = readNextInt(&quot;&quot;&quot;</span>
+        &gt; |--------------------------------------------|
+        &gt; |  Select list option                        |
+        &gt; |--------------------------------------------|
+        &gt; | 1 - list all players                       |
+        &gt; | 2 - list players by amount of victories    |
+        &gt; | 3 - list players by amount of games played |
+        &gt; | 0 - exit                                   |
+        &gt; |--------------------------------------------|
+        &gt; ==&gt;
+<span class="nc" id="L156">    &quot;&quot;&quot;.trimMargin(&quot;&gt;&quot;))</span>
+<span class="nc" id="L157">fun gameListOptions(): Int = readNextInt(&quot;&quot;&quot;</span>
+        &gt; |--------------------------------------------|
+        &gt; |  Select list option                        |
+        &gt; |--------------------------------------------|
+        &gt; | 1 - list all games                         |
+        &gt; | 2 - list games by lowest time              |
+        &gt; | 0 - exit                                   |
+        &gt; |--------------------------------------------|
+        &gt; ==&gt;
+<span class="nc" id="L166">    &quot;&quot;&quot;.trimMargin(&quot;&gt;&quot;))</span>
+<span class="nc" id="L167">fun searchListOption(): Int = readNextInt(&quot;&quot;&quot;</span>
+        &gt; |----------------------|
+        &gt; |   Search menu        |
+        &gt; | Type:                |
+        &gt; | -------------------- |
+        &gt; | 1 - to search game   |
+        &gt; | 2 - to search player |
+        &gt; | 0 - to exit menu     |
+        &gt; | ---------------------|
+<span class="nc" id="L176">        &gt; ==&gt;&quot;&quot;&quot;.trimMargin(&quot;&gt;&quot;))</span>
+<span class="nc" id="L177">fun updateListPlayer(): Int = readNextInt(&quot;&quot;&quot; </span>
+        &gt;  |-----------------------------|
+        &gt;  | Player update menu          |
+        &gt;  |-----------------------------|
+        &gt;  | 1 - Nickname                |
+        &gt;  | 0 - Exit                    |
+        &gt;  |-----------------------------|
+<span class="nc" id="L184">        ==&gt;&quot;&quot;&quot;.trimMargin(&quot;&gt;&quot;))</span>
+
+fun searchOption() {
+<span class="nc" id="L187">    while(true)</span>
+<span class="nc bnc" id="L188" title="All 4 branches missed.">        when(searchListOption()) {</span>
+<span class="nc" id="L189">            1 -&gt; searchGame()</span>
+<span class="nc" id="L190">            2 -&gt; searchPlayer()</span>
+<span class="nc" id="L191">            0 -&gt; break</span>
+<span class="nc" id="L192">            else -&gt; println(&quot;Invalid option entered.&quot;)</span>
+        }
+<span class="nc" id="L194">}</span>
+
+fun updatePlayer(indexToUpdate: Int) {
+<span class="nc" id="L197">    while (true)</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">        if (playerAPI.isValidIndexPlayers(indexToUpdate)) {</span>
+<span class="nc" id="L199">            updatePlayerMenu(indexToUpdate)</span>
+<span class="nc" id="L200">            break</span>
+<span class="nc" id="L201">        } else println(&quot;Sorry, could not update that!&quot;)</span>
+<span class="nc" id="L202">}</span>
+fun updatePlayerMenu(indexToUpdate: Int){
+<span class="nc" id="L204">    while(true)</span>
+<span class="nc bnc" id="L205" title="All 3 branches missed.">        when(updateListPlayer()){</span>
+<span class="nc" id="L206">            1 -&gt; playerAPI.updatePlayerNickname(indexToUpdate, readNextLine(&quot;Enter new player name: &quot;))</span>
+<span class="nc" id="L207">            0 -&gt; break</span>
+<span class="nc" id="L208">            else -&gt; println(&quot;Invalid option entered.&quot;)</span>
+        }
+<span class="nc" id="L210">}</span>
+
+fun searchPlayer() {
+<span class="nc" id="L213">    val searchResults = playerAPI.searchPlayerByTitle(readNextLine(&quot;Enter the description to search by: &quot;))</span>
+<span class="nc bnc" id="L214" title="All 4 branches missed.">    if(searchResults.isEmpty()) println(&quot;Nothing found!&quot;)</span>
+<span class="nc" id="L215">    else println(searchResults)</span>
+<span class="nc" id="L216">}</span>
+fun searchGame() {
+<span class="nc" id="L218">    val searchResults = gameAPI.searchGameByTitle(readNextLine(&quot;Enter the description to search by: &quot;))</span>
+<span class="nc bnc" id="L219" title="All 4 branches missed.">    if(searchResults.isEmpty()) println(&quot;Nothing found&quot;)</span>
+<span class="nc" id="L220">    else println(searchResults)</span>
+<span class="nc" id="L221">}</span>
+
+fun selectPlayer(): Player{
+<span class="nc" id="L224">    while(true) {</span>
+<span class="nc" id="L225">        val index = readNextInt(&quot;Enter a player index:&quot;)</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">        if (playerAPI.isValidIndexPlayers(index)) return playerAPI.findPlayer(index)!!</span>
+<span class="nc" id="L227">        else println(&quot;Sorry, invalid index&quot;)</span>
+    }
+}
+
+fun save() =
+<span class="nc" id="L232">    try {</span>
+<span class="nc" id="L233">        gameAPI.save()</span>
+<span class="nc" id="L234">        playerAPI.save()</span>
+<span class="nc" id="L235">    } catch (e: Exception) {</span>
+<span class="nc" id="L236">        System.err.println(&quot;Error writing to file: $e&quot;)</span>
+<span class="nc" id="L237">    }</span>
+fun load() =
+<span class="nc" id="L239">    try {</span>
+<span class="nc" id="L240">        gameAPI.load()</span>
+<span class="nc" id="L241">        playerAPI.load()</span>
+<span class="nc" id="L242">    } catch (e: Exception) {</span>
+<span class="nc" id="L243">        System.err.println(&quot;Error loading from file: $e&quot;)</span>
+<span class="nc" id="L244">    }</span>
+
+fun exitApp() {
+<span class="nc" id="L247">    save()</span>
+<span class="nc" id="L248">    println(&quot;Exiting...bye&quot;)</span>
+<span class="nc" id="L249">    exitProcess(0)</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>
