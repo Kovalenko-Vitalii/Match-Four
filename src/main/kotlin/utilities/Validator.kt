@@ -1,8 +1,7 @@
 package utils
 
 import java.lang.NumberFormatException
-import java.time.*
-import java.util.*
+import java.util.Scanner
 
 /**
  * This class provides methods for the robust handling of I/O using Scanner.
@@ -101,23 +100,6 @@ object Validator {
                 }
             } catch (e: NumberFormatException) {
                 System.err.println("\tEnter a number please.")
-            }
-        } while (true)
-    }
-
-    /**
-     * Parses user input to a LocalDate, with error handling for invalid date formats.
-     *
-     * @param input The message displayed to the user.
-     * @return The parsed LocalDate.
-     */
-    @JvmStatic
-    fun setLocalDate(input: String): LocalDate {
-        do {
-            try {
-                return LocalDate.parse(readNextLine(input))
-            } catch (e: Exception) {
-                System.err.println("\tInvalid Input. Please try again")
             }
         } while (true)
     }
