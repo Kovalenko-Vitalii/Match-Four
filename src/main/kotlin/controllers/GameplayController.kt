@@ -1,13 +1,22 @@
+/**
+ * Manages the gameplay mechanics.
+ * - Handles the game execution, including turn-taking logic and win checking.
+ * - Provides methods for displaying the game field and placing tokens.
+ */
 package controllers
 
 import models.Game
 import models.Player
-import utils.Validator.readNextIntWithLimit
+import utilities.Validator.readNextIntWithLimit
 
-// It`s fine to have a println`s here Siobhan said
-class GameplayController(val gameAPI: GameAPI) {
+// Contains methods for managing gameplay and displaying information
+class GameplayController(private val gameAPI: GameAPI) {
+    /**
+     * Initiates and executes a game between two players.
+     * @return Game The completed game instance.
+     */
     fun playGame(player1: Player, player2: Player): Game {
-        val game = Game(gameAPI.addId(), Array(6, { IntArray(7) }), "", 0.0, arrayOf("", ""))
+        val game = Game(gameAPI.addId(), Array(6) { IntArray(7) }, "", 0.0, arrayOf("", ""))
         game.opponents = arrayOf(player1.playerId, player2.playerId)
         player1.gamesPlayed?.add(game.gameId)
         player2.gamesPlayed?.add(game.gameId)
@@ -17,6 +26,12 @@ class GameplayController(val gameAPI: GameAPI) {
         game.time = (endTime - startTime) / (1000.0 * 60.0)
         return game
     }
+
+    // Other methods for displaying and managing the game
+
+    /**
+     * Displays the game field.
+     */
     private fun gameRunning(player1: Player, player2: Player, game: Game) {
         while (true) {
             println(placeToken(1, game))
@@ -25,6 +40,11 @@ class GameplayController(val gameAPI: GameAPI) {
             if (checkGame(game)) { player2.gamesWon++; game.winnerName = player2.playerName; break }
         }
     }
+
+    /**
+     * Checks for a winning sequence in the game field.
+     * @return Boolean Indicates if a winning sequence is found.
+     */
     fun displayField(game: Game?) {
         println("1 2 3 4 5 6 7")
         for (row in game!!.gameField) {
@@ -40,6 +60,10 @@ class GameplayController(val gameAPI: GameAPI) {
             println()
         }
     }
+
+    /**
+     * Places a token on the game field for the respective player.
+     */
     private fun checkLine(player: Int, game: Game): Boolean {
         // Check horizontal
         for (row in 0 until 6) {
@@ -90,6 +114,8 @@ class GameplayController(val gameAPI: GameAPI) {
         }
         return false
     }
+
+    // Other private methods for managing the game mechanics
     private fun checkGame(game: Game): Boolean {
         if (checkLine(1, game)) {
             println("Player 1 has won this game!")

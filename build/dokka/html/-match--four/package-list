@@ -8,6 +8,7 @@ $dokka.location://gameOptions/#/PointingToDeclaration/-match--four/[root]/game-
 $dokka.location://listAllGames/#/PointingToDeclaration/-match--four/[root]/list-all-games.html
 $dokka.location://listAllPlayers/#/PointingToDeclaration/-match--four/[root]/list-all-players.html
 $dokka.location://load/#/PointingToDeclaration/-match--four/[root]/load.html
+$dokka.location://logger/#/PointingToDeclaration/-match--four/[root]/logger.html
 $dokka.location://main/#/PointingToDeclaration/-match--four/[root]/main.html
 $dokka.location://mainMenu/#/PointingToDeclaration/-match--four/[root]/main-menu.html
 $dokka.location://playGame/#/PointingToDeclaration/-match--four/[root]/play-game.html
@@ -25,14 +26,11 @@ $dokka.location://updatePlayer/#kotlin.Int/PointingToDeclaration/-match--four/[
 $dokka.location://updatePlayerMenu/#kotlin.Int/PointingToDeclaration/-match--four/[root]/update-player-menu.html
 $dokka.location:controllers////PointingToDeclaration/-match--four/controllers/index.html
 $dokka.location:controllers/GameAPI///PointingToDeclaration/-match--four/controllers/-game-a-p-i/index.html
-$dokka.location:controllers/GameAPI/GameAPI/#persistence.Serializer/PointingToDeclaration/-match--four/controllers/-game-a-p-i/-game-a-p-i.html
+$dokka.location:controllers/GameAPI/GameAPI/#persistance.Serializer/PointingToDeclaration/-match--four/controllers/-game-a-p-i/-game-a-p-i.html
 $dokka.location:controllers/GameAPI/addGame/#models.Game/PointingToDeclaration/-match--four/controllers/-game-a-p-i/add-game.html
 $dokka.location:controllers/GameAPI/addId/#/PointingToDeclaration/-match--four/controllers/-game-a-p-i/add-id.html
-$dokka.location:controllers/GameAPI/chechkId/#kotlin.String/PointingToDeclaration/-match--four/controllers/-game-a-p-i/chechk-id.html
 $dokka.location:controllers/GameAPI/deleteGame/#kotlin.Int/PointingToDeclaration/-match--four/controllers/-game-a-p-i/delete-game.html
-$dokka.location:controllers/GameAPI/generateID/#/PointingToDeclaration/-match--four/controllers/-game-a-p-i/generate-i-d.html
 $dokka.location:controllers/GameAPI/getGameById/#kotlin.Int/PointingToDeclaration/-match--four/controllers/-game-a-p-i/get-game-by-id.html
-$dokka.location:controllers/GameAPI/isValidIndexGames/#kotlin.Int/PointingToDeclaration/-match--four/controllers/-game-a-p-i/is-valid-index-games.html
 $dokka.location:controllers/GameAPI/listAllGames/#/PointingToDeclaration/-match--four/controllers/-game-a-p-i/list-all-games.html
 $dokka.location:controllers/GameAPI/listGamesByTime/#/PointingToDeclaration/-match--four/controllers/-game-a-p-i/list-games-by-time.html
 $dokka.location:controllers/GameAPI/load/#/PointingToDeclaration/-match--four/controllers/-game-a-p-i/load.html
@@ -42,17 +40,13 @@ $dokka.location:controllers/GameAPI/searchGameByTitle/#kotlin.String/PointingToD
 $dokka.location:controllers/GameplayController///PointingToDeclaration/-match--four/controllers/-gameplay-controller/index.html
 $dokka.location:controllers/GameplayController/GameplayController/#controllers.GameAPI/PointingToDeclaration/-match--four/controllers/-gameplay-controller/-gameplay-controller.html
 $dokka.location:controllers/GameplayController/displayField/#models.Game?/PointingToDeclaration/-match--four/controllers/-gameplay-controller/display-field.html
-$dokka.location:controllers/GameplayController/gameAPI/#/PointingToDeclaration/-match--four/controllers/-gameplay-controller/game-a-p-i.html
 $dokka.location:controllers/GameplayController/playGame/#models.Player#models.Player/PointingToDeclaration/-match--four/controllers/-gameplay-controller/play-game.html
 $dokka.location:controllers/PlayerAPI///PointingToDeclaration/-match--four/controllers/-player-a-p-i/index.html
-$dokka.location:controllers/PlayerAPI/PlayerAPI/#persistence.Serializer/PointingToDeclaration/-match--four/controllers/-player-a-p-i/-player-a-p-i.html
+$dokka.location:controllers/PlayerAPI/PlayerAPI/#persistance.Serializer/PointingToDeclaration/-match--four/controllers/-player-a-p-i/-player-a-p-i.html
 $dokka.location:controllers/PlayerAPI/addId/#/PointingToDeclaration/-match--four/controllers/-player-a-p-i/add-id.html
 $dokka.location:controllers/PlayerAPI/addPlayer/#models.Player/PointingToDeclaration/-match--four/controllers/-player-a-p-i/add-player.html
-$dokka.location:controllers/PlayerAPI/chechkId/#kotlin.String/PointingToDeclaration/-match--four/controllers/-player-a-p-i/chechk-id.html
 $dokka.location:controllers/PlayerAPI/deletePlayer/#kotlin.Int/PointingToDeclaration/-match--four/controllers/-player-a-p-i/delete-player.html
 $dokka.location:controllers/PlayerAPI/findPlayer/#kotlin.Int/PointingToDeclaration/-match--four/controllers/-player-a-p-i/find-player.html
-$dokka.location:controllers/PlayerAPI/findPlayerById/#kotlin.String/PointingToDeclaration/-match--four/controllers/-player-a-p-i/find-player-by-id.html
-$dokka.location:controllers/PlayerAPI/generateID/#/PointingToDeclaration/-match--four/controllers/-player-a-p-i/generate-i-d.html
 $dokka.location:controllers/PlayerAPI/isValidIndexPlayers/#kotlin.Int/PointingToDeclaration/-match--four/controllers/-player-a-p-i/is-valid-index-players.html
 $dokka.location:controllers/PlayerAPI/listAllPlayers/#/PointingToDeclaration/-match--four/controllers/-player-a-p-i/list-all-players.html
 $dokka.location:controllers/PlayerAPI/listPlayersByGamesPlayed/#/PointingToDeclaration/-match--four/controllers/-player-a-p-i/list-players-by-games-played.html
@@ -78,28 +72,27 @@ $dokka.location:models/Player/gamesWon/#/PointingToDeclaration/-match--four/mod
 $dokka.location:models/Player/playerId/#/PointingToDeclaration/-match--four/models/-player/player-id.html
 $dokka.location:models/Player/playerName/#/PointingToDeclaration/-match--four/models/-player/player-name.html
 $dokka.location:models/Player/toString/#/PointingToDeclaration/-match--four/models/-player/to-string.html
-$dokka.location:persistence////PointingToDeclaration/-match--four/persistence/index.html
-$dokka.location:persistence/JSONSerializer///PointingToDeclaration/-match--four/persistence/-j-s-o-n-serializer/index.html
-$dokka.location:persistence/JSONSerializer/JSONSerializer/#java.io.File/PointingToDeclaration/-match--four/persistence/-j-s-o-n-serializer/-j-s-o-n-serializer.html
-$dokka.location:persistence/JSONSerializer/read/#/PointingToDeclaration/-match--four/persistence/-j-s-o-n-serializer/read.html
-$dokka.location:persistence/JSONSerializer/write/#kotlin.Any?/PointingToDeclaration/-match--four/persistence/-j-s-o-n-serializer/write.html
-$dokka.location:persistence/Serializer///PointingToDeclaration/-match--four/persistence/-serializer/index.html
-$dokka.location:persistence/Serializer/read/#/PointingToDeclaration/-match--four/persistence/-serializer/read.html
-$dokka.location:persistence/Serializer/write/#kotlin.Any?/PointingToDeclaration/-match--four/persistence/-serializer/write.html
-$dokka.location:persistence/XMLSerializer///PointingToDeclaration/-match--four/persistence/-x-m-l-serializer/index.html
-$dokka.location:persistence/XMLSerializer/XMLSerializer/#java.io.File/PointingToDeclaration/-match--four/persistence/-x-m-l-serializer/-x-m-l-serializer.html
-$dokka.location:persistence/XMLSerializer/read/#/PointingToDeclaration/-match--four/persistence/-x-m-l-serializer/read.html
-$dokka.location:persistence/XMLSerializer/write/#kotlin.Any?/PointingToDeclaration/-match--four/persistence/-x-m-l-serializer/write.html
-$dokka.location:utils////PointingToDeclaration/-match--four/utils/index.html
-$dokka.location:utils/Validator///PointingToDeclaration/-match--four/utils/-validator/index.html
-$dokka.location:utils/Validator/readNextChar/#kotlin.String?/PointingToDeclaration/-match--four/utils/-validator/read-next-char.html
-$dokka.location:utils/Validator/readNextDouble/#kotlin.String?/PointingToDeclaration/-match--four/utils/-validator/read-next-double.html
-$dokka.location:utils/Validator/readNextInt/#kotlin.String?/PointingToDeclaration/-match--four/utils/-validator/read-next-int.html
-$dokka.location:utils/Validator/readNextIntWithLimit/#kotlin.String?#kotlin.Int#kotlin.Int/PointingToDeclaration/-match--four/utils/-validator/read-next-int-with-limit.html
-$dokka.location:utils/Validator/readNextLine/#kotlin.String?/PointingToDeclaration/-match--four/utils/-validator/read-next-line.html
-$dokka.location:utils/Validator/setLocalDate/#kotlin.String/PointingToDeclaration/-match--four/utils/-validator/set-local-date.html
+$dokka.location:persistance////PointingToDeclaration/-match--four/persistance/index.html
+$dokka.location:persistance/JSONSerializer///PointingToDeclaration/-match--four/persistance/-j-s-o-n-serializer/index.html
+$dokka.location:persistance/JSONSerializer/JSONSerializer/#java.io.File/PointingToDeclaration/-match--four/persistance/-j-s-o-n-serializer/-j-s-o-n-serializer.html
+$dokka.location:persistance/JSONSerializer/read/#/PointingToDeclaration/-match--four/persistance/-j-s-o-n-serializer/read.html
+$dokka.location:persistance/JSONSerializer/write/#kotlin.Any?/PointingToDeclaration/-match--four/persistance/-j-s-o-n-serializer/write.html
+$dokka.location:persistance/Serializer///PointingToDeclaration/-match--four/persistance/-serializer/index.html
+$dokka.location:persistance/Serializer/read/#/PointingToDeclaration/-match--four/persistance/-serializer/read.html
+$dokka.location:persistance/Serializer/write/#kotlin.Any?/PointingToDeclaration/-match--four/persistance/-serializer/write.html
+$dokka.location:persistance/XMLSerializer///PointingToDeclaration/-match--four/persistance/-x-m-l-serializer/index.html
+$dokka.location:persistance/XMLSerializer/XMLSerializer/#java.io.File/PointingToDeclaration/-match--four/persistance/-x-m-l-serializer/-x-m-l-serializer.html
+$dokka.location:persistance/XMLSerializer/read/#/PointingToDeclaration/-match--four/persistance/-x-m-l-serializer/read.html
+$dokka.location:persistance/XMLSerializer/write/#kotlin.Any?/PointingToDeclaration/-match--four/persistance/-x-m-l-serializer/write.html
+$dokka.location:utilities////PointingToDeclaration/-match--four/utilities/index.html
+$dokka.location:utilities/Validator///PointingToDeclaration/-match--four/utilities/-validator/index.html
+$dokka.location:utilities/Validator/readNextChar/#kotlin.String?/PointingToDeclaration/-match--four/utilities/-validator/read-next-char.html
+$dokka.location:utilities/Validator/readNextDouble/#kotlin.String?/PointingToDeclaration/-match--four/utilities/-validator/read-next-double.html
+$dokka.location:utilities/Validator/readNextInt/#kotlin.String?/PointingToDeclaration/-match--four/utilities/-validator/read-next-int.html
+$dokka.location:utilities/Validator/readNextIntWithLimit/#kotlin.String?#kotlin.Int#kotlin.Int/PointingToDeclaration/-match--four/utilities/-validator/read-next-int-with-limit.html
+$dokka.location:utilities/Validator/readNextLine/#kotlin.String?/PointingToDeclaration/-match--four/utilities/-validator/read-next-line.html
 controllers
 models
-persistence
-utils
+persistance
+utilities
 

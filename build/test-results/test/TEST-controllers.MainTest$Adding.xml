@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="controllers.MainTest$Adding" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-12-02T13:59:51" hostname="LAPTOP-BKGB23SF" time="0.165">
+<testsuite name="controllers.MainTest$Adding" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-12-02T16:30:52" hostname="LAPTOP-BKGB23SF" time="0.107">
   <properties/>
-  <testcase name="Adding a game to gameAPI()" classname="controllers.MainTest$Adding" time="0.16"/>
+  <testcase name="Adding a game to gameAPI()" classname="controllers.MainTest$Adding" time="0.103"/>
   <testcase name="Adding a player to playerAPI()" classname="controllers.MainTest$Adding" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

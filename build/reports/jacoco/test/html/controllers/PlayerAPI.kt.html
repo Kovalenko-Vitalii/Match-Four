@@ -1,79 +1,171 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlayerAPI.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Match-Four</a> &gt; <a href="index.source.html" class="el_package">controllers</a> &gt; <span class="el_source">PlayerAPI.kt</span></div><h1>PlayerAPI.kt</h1><pre class="source lang-java linenums">package controllers
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlayerAPI.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Match-Four</a> &gt; <a href="index.source.html" class="el_package">controllers</a> &gt; <span class="el_source">PlayerAPI.kt</span></div><h1>PlayerAPI.kt</h1><pre class="source lang-java linenums">/**
+ * Manages player-related functionalities and data.
+ * - Handles player addition, deletion, and searching.
+ * - Manages player data serialization.
+ * - Provides various methods for retrieving player information.
+ * - Allows loading and saving player data.
+ */
+package controllers
 
 import models.Player
-import persistence.Serializer
+import persistance.Serializer
 
-<span class="fc" id="L6">class PlayerAPI(serializerType: Serializer) {</span>
-<span class="fc" id="L7">    private var players = ArrayList&lt;Player&gt;()</span>
-<span class="fc" id="L8">    private var serializer = serializerType</span>
+<span class="fc" id="L13">class PlayerAPI(serializerType: Serializer) {</span>
+<span class="fc" id="L14">    private var players = ArrayList&lt;Player&gt;() // Stores the list of players</span>
+<span class="fc" id="L15">    private var serializer = serializerType // Serializer for player data</span>
 
-<span class="fc" id="L10">    fun addPlayer(player: Player) = players.add(player)</span>
+    /**
+     * Adds a player to the list of players.
+     */
+<span class="fc" id="L20">    fun addPlayer(player: Player) = players.add(player)</span>
+
+    /**
+     * Deletes a player from the list of players based on the provided index.
+     * @return Player? The deleted player or null if deletion fails.
+     */
     fun deletePlayer(indexToDelete: Int): Player? =
-<span class="fc bfc" id="L12" title="All 2 branches covered.">        if (isValidListIndex(indexToDelete, players)) {</span>
-<span class="fc" id="L13">            players.removeAt(indexToDelete)</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (isValidListIndex(indexToDelete, players)) {</span>
+<span class="fc" id="L28">            players.removeAt(indexToDelete)</span>
         } else {
-<span class="fc" id="L15">            null</span>
-<span class="fc" id="L16">        }</span>
-    fun findPlayer(index: Int): Player? =
-<span class="pc bpc" id="L18" title="1 of 2 branches missed.">        if (isValidListIndex(index, players)) {</span>
-<span class="fc" id="L19">            players[index]</span>
-        } else {
-<span class="nc" id="L21">            null</span>
-<span class="fc" id="L22">        }</span>
-    fun searchPlayerByTitle(searchString: String): String =
-<span class="nc" id="L24">        formatListString(players.filter { player -&gt; player.playerName.contains(searchString, ignoreCase = true) })</span>
-
-    fun listAllPlayers(): String =
-<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (players.isEmpty()) {</span>
-<span class="fc" id="L28">            &quot;\u001B[31B No players recorded.&quot;</span>
-        } else {
-<span class="fc" id="L30">            formatListString(players)</span>
+<span class="fc" id="L30">            null</span>
 <span class="fc" id="L31">        }</span>
+
+    /**
+     * Finds and returns a player based on the provided index.
+     * @return Player? The found player or null if not found.
+     */
+    fun findPlayer(index: Int): Player? =
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        if (isValidListIndex(index, players)) {</span>
+<span class="fc" id="L39">            players[index]</span>
+        } else {
+<span class="nc" id="L41">            null</span>
+<span class="fc" id="L42">        }</span>
+
+    /**
+     * Searches for players based on a provided title.
+     * @return String A formatted string containing the search results.
+     */
+    fun searchPlayerByTitle(searchString: String): String =
+<span class="nc" id="L49">        formatListString(players.filter { player -&gt; player.playerName.contains(searchString, ignoreCase = true) })</span>
+
+    /**
+     * Lists all players stored in the system.
+     * @return String A formatted string containing all player records.
+     */
+    fun listAllPlayers(): String =
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (players.isEmpty()) {</span>
+<span class="fc" id="L57">            &quot;\u001B[31B No players recorded.&quot;</span>
+        } else {
+<span class="fc" id="L59">            formatListString(players)</span>
+<span class="fc" id="L60">        }</span>
+
+    // Methods for listing players by different criteria
+
+    /**
+     * Lists players sorted by victories in descending order.
+     * @return String A formatted string containing players sorted by victories.
+     */
     fun listPlayersByVictoriesAmount(): String =
-<span class="nc bnc" id="L33" title="All 2 branches missed.">        if (players.isEmpty()) {</span>
-<span class="nc" id="L34">            &quot;\u001B[31B No players recorded.&quot;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (players.isEmpty()) {</span>
+<span class="nc" id="L70">            &quot;\u001B[31B No players recorded.&quot;</span>
         } else {
-<span class="nc" id="L36">            formatListString(players.sortedByDescending { it.gamesWon })</span>
-<span class="nc" id="L37">        }</span>
+<span class="nc" id="L72">            formatListString(players.sortedByDescending { it.gamesWon })</span>
+<span class="nc" id="L73">        }</span>
+
+    /**
+     * Lists players sorted by the number of games played in descending order.
+     * @return String A formatted string containing players sorted by games played.
+     */
     fun listPlayersByGamesPlayed(): String =
-<span class="nc bnc" id="L39" title="All 2 branches missed.">        if (players.isEmpty()) {</span>
-<span class="nc" id="L40">            &quot;\u001B[31B No players recorded.&quot;</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if (players.isEmpty()) {</span>
+<span class="nc" id="L81">            &quot;\u001B[31B No players recorded.&quot;</span>
         } else {
-<span class="nc" id="L42">            formatListString(players.sortedByDescending { it.gamesPlayed?.size })</span>
-<span class="nc" id="L43">        }</span>
+<span class="nc" id="L83">            formatListString(players.sortedByDescending { it.gamesPlayed?.size })</span>
+<span class="nc" id="L84">        }</span>
 
+    // Private helper methods
+
+    /**
+     * Formats a list of records into a string.
+     * @return String A formatted string with indexed records.
+     */
     private fun formatListString(contentToFormat: List&lt;Any&gt;): String =
-<span class="fc" id="L46">        contentToFormat.joinToString(separator = &quot;\n&quot;) { record -&gt;</span>
-<span class="fc" id="L47">            contentToFormat.indexOf(record).toString() + &quot;: &quot; + record.toString()</span>
-<span class="fc" id="L48">        }</span>
-<span class="pc bpc" id="L49" title="1 of 4 branches missed.">    private fun isValidListIndex(index: Int, list: List&lt;Any&gt;): Boolean = index &gt;= 0 &amp;&amp; index &lt; list.size</span>
-<span class="nc" id="L50">    fun isValidIndexPlayers(index: Int): Boolean = isValidListIndex(index, players)</span>
-<span class="fc" id="L51">    fun numberOfPlayers(): Int = players.size</span>
+<span class="fc" id="L93">        contentToFormat.joinToString(separator = &quot;\n&quot;) { record -&gt;</span>
+<span class="fc" id="L94">            contentToFormat.indexOf(record).toString() + &quot;: &quot; + record.toString()</span>
+<span class="fc" id="L95">        }</span>
 
-<span class="nc" id="L53">    fun generateID(): String = (0..99999).random().toString().padStart(5, '0')</span>
-<span class="nc" id="L54">    fun chechkId(newId: String): Boolean = !players.any { it.playerId.contains(newId) }</span>
+    /**
+     * Checks if the provided index is valid within the list bounds.
+     * @return Boolean Indicates if the index is valid.
+     */
+<span class="pc bpc" id="L101" title="1 of 4 branches missed.">    private fun isValidListIndex(index: Int, list: List&lt;Any&gt;): Boolean = index &gt;= 0 &amp;&amp; index &lt; list.size</span>
+<span class="nc" id="L102">    fun isValidIndexPlayers(index: Int): Boolean = isValidListIndex(index, players)</span>
 
+    // Other functionalities for player management
+
+    /**
+     * @return Int number of players in the system.
+     */
+<span class="fc" id="L109">    fun numberOfPlayers(): Int = players.size</span>
+
+    /**
+     * Generates a random ID for a player.
+     * @return String A randomly generated ID for a player.
+     */
+<span class="nc" id="L115">    private fun generateID(): String = (0..99999).random().toString().padStart(5, '0')</span>
+
+    /**
+     * Checks if a provided ID is unique among players.
+     * @return Boolean Indicates if the ID is unique.
+     */
+<span class="nc" id="L121">    private fun checkId(newId: String): Boolean = !players.any { it.playerId.contains(newId) }</span>
+
+    /**
+     * Generates and adds a unique ID to a player.
+     * @return String A unique ID for a player.
+     */
     fun addId(): String {
-<span class="nc" id="L57">        while (true) {</span>
-<span class="nc" id="L58">            val newId = generateID()</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">            if (chechkId(newId)) { return newId }</span>
+<span class="nc" id="L128">        while (true) {</span>
+<span class="nc" id="L129">            val newId = generateID()</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">            if (checkId(newId)) { return newId }</span>
         }
     }
-    fun findPlayerById(playerId: String): Player? =
-<span class="nc bnc" id="L63" title="All 4 branches missed.">        players.find { it.playerId == playerId }</span>
 
+    // Methods for finding and updating player information
+
+    /**
+     * Finds a player based on their ID.
+     * @return Player? The found player or null if not found.
+
+     fun findPlayerById(playerId: String): Player? =
+     players. find { it.playerId == playerId }
+     */
+
+    /**
+     * Updates a player's nickname based on the provided index.
+     */
     fun updatePlayerNickname(indexToUpdate: Int, newName: String) {
-<span class="fc" id="L66">        findPlayer(indexToUpdate)!!.playerName = newName</span>
-<span class="fc" id="L67">    }</span>
+<span class="fc" id="L148">        findPlayer(indexToUpdate)!!.playerName = newName</span>
+<span class="fc" id="L149">    }</span>
 
+    // Methods for data loading and saving
+
+    /**
+     * Loads player data from the serializer.
+     * @throws Exception If there's an error in the loading process.
+     */
     @Throws(Exception::class)
     fun load() {
-<span class="fc" id="L71">        players = serializer.read() as ArrayList&lt;Player&gt;</span>
-<span class="fc" id="L72">    }</span>
+<span class="fc" id="L159">        players = serializer.read() as ArrayList&lt;Player&gt;</span>
+<span class="fc" id="L160">    }</span>
 
+    /**
+     * Saves player data using the serializer.
+     * @throws Exception If there's an error in the saving process.
+     */
     @Throws(Exception::class)
     fun save() {
-<span class="fc" id="L76">        serializer.write(players)</span>
-<span class="fc" id="L77">    }</span>
+<span class="fc" id="L168">        serializer.write(players)</span>
+<span class="fc" id="L169">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

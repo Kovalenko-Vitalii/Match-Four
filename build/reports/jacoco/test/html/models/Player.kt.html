@@ -1,11 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Player.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Match-Four</a> &gt; <a href="index.source.html" class="el_package">models</a> &gt; <span class="el_source">Player.kt</span></div><h1>Player.kt</h1><pre class="source lang-java linenums">package models
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Player.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Match-Four</a> &gt; <a href="index.source.html" class="el_package">models</a> &gt; <span class="el_source">Player.kt</span></div><h1>Player.kt</h1><pre class="source lang-java linenums">/**
+ * Represents a player entity.
+ * - Contains player-specific attributes such as ID, name, number of games won, and list of games played.
+ * - Provides a string representation of a player instance.
+ */
+package models
 
-<span class="fc" id="L3">data class Player(</span>
-<span class="pc" id="L4">    var playerId: String,</span>
-<span class="fc" id="L5">    var playerName: String,</span>
-<span class="pc" id="L6">    var gamesWon: Int,</span>
-<span class="pc" id="L7">    var gamesPlayed: ArrayList&lt;String&gt;?</span>
+<span class="fc" id="L8">data class Player(</span>
+<span class="pc" id="L9">    var playerId: String, // Unique ID for the player</span>
+<span class="fc" id="L10">    var playerName: String, // Name of the player</span>
+<span class="pc" id="L11">    var gamesWon: Int, // Number of games won by the player</span>
+<span class="pc" id="L12">    var gamesPlayed: ArrayList&lt;String&gt;? // List of game IDs played by the player</span>
 ) {
-<span class="fc" id="L9">    override fun toString(): String = &quot;| PLAYER | id: $playerId | Nickname: $playerName | Games won: $gamesWon&quot;</span>
+    /**
+     * Provides a string representation of a player instance.
+     * @return String A formatted string describing the player.
+     */
+<span class="fc" id="L18">    override fun toString(): String = &quot;| PLAYER | id: $playerId | Nickname: $playerName | Games won: $gamesWon&quot;</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>
