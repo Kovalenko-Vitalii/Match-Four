@@ -343,7 +343,7 @@ fun searchPlayer() {
  */
 fun searchGame() {
     logger.info { "searchGame fun started" }
-    val searchResults = gameAPI.searchGameByTitle(readNextLine("Enter the description to search by: "))
+    val searchResults = gameAPI.searchGameByTitle(readNextLine("Enter the winner name to search by: "))
     if (searchResults.isEmpty()) {
         println("Nothing found")
     } else {

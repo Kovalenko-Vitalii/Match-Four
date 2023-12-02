@@ -1,0 +1,1 @@
+{"object-stream":{"list":[{"models.Game":{"gameId":11379,"gameField":[{"int-array":[{"int":[0,0,0,0,0,0,0]},{"int":[0,0,0,0,0,0,0]},{"int":[1,0,0,0,0,0,0]},{"int":[1,2,0,0,0,0,0]},{"int":[1,2,0,0,0,0,0]},{"int":[1,2,0,0,0,0,0]}]}],"winnerName":"player1","time":0.90355,"opponents":[{"string":[10933,45037]}]}}]}}
