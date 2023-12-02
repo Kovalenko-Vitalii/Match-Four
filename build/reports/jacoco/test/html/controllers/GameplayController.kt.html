@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameplayController.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Match-Four</a> &gt; <a href="index.source.html" class="el_package">controllers</a> &gt; <span class="el_source">GameplayController.kt</span></div><h1>GameplayController.kt</h1><pre class="source lang-java linenums">package controllers
+
+import models.Game
+import models.Player
+import utils.Validator.readNextIntWithLimit
+
+
+//It`s fine to have a println`s here Siobhan said
+<span class="nc" id="L9">class GameplayController(val gameAPI: GameAPI){</span>
+    fun playGame(player1: Player, player2: Player): Game{
+<span class="nc bnc" id="L11" title="All 2 branches missed.">        val game = Game(gameAPI.addId(), Array(6,{IntArray(7)}), &quot;&quot;, 0.0, arrayOf(&quot;&quot;, &quot;&quot;))</span>
+<span class="nc" id="L12">        game.opponents = arrayOf(player1.playerId, player2.playerId)</span>
+<span class="nc bnc" id="L13" title="All 2 branches missed.">        player1.gamesPlayed?.add(game.gameId)</span>
+<span class="nc bnc" id="L14" title="All 2 branches missed.">        player2.gamesPlayed?.add(game.gameId)</span>
+<span class="nc" id="L15">        val startTime = System.currentTimeMillis()</span>
+<span class="nc" id="L16">        gameRunning(player1, player2, game)</span>
+<span class="nc" id="L17">        val endTime = System.currentTimeMillis()</span>
+<span class="nc" id="L18">        game.time = (endTime - startTime) / (1000.0 * 60.0)</span>
+<span class="nc" id="L19">        return game</span>
+    }
+    private fun gameRunning(player1: Player, player2: Player, game: Game) {
+<span class="nc" id="L22">        while (true) {</span>
+<span class="nc" id="L23">            println(placeToken(1, game))</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">            if(checkGame(game)) {player1.gamesWon++; game.winnerName = player1.playerName; break}</span>
+<span class="nc" id="L25">            println(placeToken(2, game))</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">            if(checkGame(game)) {player2.gamesWon++; game.winnerName = player2.playerName; break}</span>
+        }
+<span class="nc" id="L28">    }</span>
+    fun displayField(game: Game?) {
+<span class="nc" id="L30">        println(&quot;1 2 3 4 5 6 7&quot;)</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        for (row in game!!.gameField) {</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">            for (cell in row) {</span>
+<span class="nc bnc" id="L33" title="All 4 branches missed.">                val symbol = when (cell) {</span>
+<span class="nc" id="L34">                    0 -&gt; &quot;_&quot;</span>
+<span class="nc" id="L35">                    1 -&gt; &quot;\u001B[31mX\u001b[0m&quot;</span>
+<span class="nc" id="L36">                    2 -&gt; &quot;\u001B[34mO\u001b[0m&quot;</span>
+<span class="nc" id="L37">                    else -&gt; &quot;$&quot;</span>
+                }
+<span class="nc" id="L39">                print(&quot;$symbol &quot;)</span>
+            }
+<span class="nc" id="L41">            println()</span>
+        }
+<span class="nc" id="L43">    }</span>
+    private fun checkLine(player: Int, game: Game): Boolean {
+        //Check horizontal
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        for (row in 0 until 6) {</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">            for (col in 0 until 4) {</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">                if (game.gameField[row][col] == player &amp;&amp;</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">                    game.gameField[row][col + 1] == player &amp;&amp;</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">                    game.gameField[row][col + 2] == player &amp;&amp;</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">                    game.gameField[row][col + 3] == player</span>
+                ) {
+<span class="nc" id="L53">                    return true</span>
+                }
+            }
+        }
+        //Check vertical
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        for (col in 0 until 7) {</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">            for (row in 0 until 3) {</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">                if (game.gameField[row][col] == player &amp;&amp;</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">                    game.gameField[row + 1][col] == player &amp;&amp;</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">                    game.gameField[row + 2][col] == player &amp;&amp;</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">                    game.gameField[row + 3][col] == player</span>
+                ) {
+<span class="nc" id="L65">                    return true</span>
+                }
+            }
+        }
+        //Check diagonals
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        for (row in 0 until 3) {</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">            for (col in 0 until 4) {</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">                if (game.gameField[row][col] == player &amp;&amp;</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">                    game.gameField[row + 1][col + 1] == player &amp;&amp;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">                    game.gameField[row + 2][col + 2] == player &amp;&amp;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">                    game.gameField[row + 3][col + 3] == player</span>
+                ) {
+<span class="nc" id="L77">                    return true</span>
+                }
+            }
+        }
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        for (row in 3 until 6) {</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">            for (col in 0 until 4) {</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">                if (game.gameField[row][col] == player &amp;&amp;</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">                    game.gameField[row - 1][col + 1] == player &amp;&amp;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">                    game.gameField[row - 2][col + 2] == player &amp;&amp;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">                    game.gameField[row - 3][col + 3] == player</span>
+                ) {
+<span class="nc" id="L88">                    return true</span>
+                }
+            }
+        }
+<span class="nc" id="L92">        return false</span>
+    }
+    private fun checkGame(game: Game): Boolean{
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        if(checkLine(1, game)){</span>
+<span class="nc" id="L96">            println(&quot;Player 1 has won this game!&quot;)</span>
+<span class="nc" id="L97">            return true</span>
+        }
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        else if(checkLine(2, game)){</span>
+<span class="nc" id="L100">            println(&quot;Player 2 has won this game!&quot;)</span>
+<span class="nc" id="L101">            return true</span>
+        }
+<span class="nc" id="L103">        return false</span>
+    }
+    private fun placeToken(playerNumber: Int, game: Game){
+<span class="nc" id="L106">        displayField(game)</span>
+<span class="nc" id="L107">        while(true){</span>
+<span class="nc" id="L108">            val columnSelected = readNextIntWithLimit(&quot;PLAYER $playerNumber: Enter a row (1-7)&quot;, 1, 7) - 1</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">            for(i in game.gameField.size - 1 downTo 0){</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">                if (game.gameField[i][columnSelected] == 0) {</span>
+<span class="nc" id="L111">                    game.gameField[i][columnSelected] = playerNumber</span>
+<span class="nc" id="L112">                    displayField(game)</span>
+<span class="nc" id="L113">                    return</span>
+                }
+            }
+<span class="nc" id="L116">            println(&quot;There is no space left in the column!&quot;)</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>
