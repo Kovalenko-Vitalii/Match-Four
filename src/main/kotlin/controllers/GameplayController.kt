@@ -62,7 +62,9 @@ class GameplayController(private val gameAPI: GameAPI) {
     }
 
     /**
-     * Places a token on the game field for the respective player.
+     * Checks field if anyone have won.
+     * Was written with help of chatGPT 3.5
+     * Prompt used: I need an algorithm that will analyze this array and check if any of 1s or 2s are aligned in a sequence of four (horizontal, vertical or diagonal)
      */
     private fun checkLine(player: Int, game: Game): Boolean {
         // Check horizontal
@@ -126,6 +128,10 @@ class GameplayController(private val gameAPI: GameAPI) {
         }
         return false
     }
+
+    /**
+     * Places a token on the game field for the respective player.
+     */
     private fun placeToken(playerNumber: Int, game: Game) {
         displayField(game)
         while (true) {

@@ -343,7 +343,7 @@ fun searchPlayer() {
  */
 fun searchGame() {
 <span class="nc" id="L345">    logger.info { &quot;searchGame fun started&quot; }</span>
-<span class="nc" id="L346">    val searchResults = gameAPI.searchGameByTitle(readNextLine(&quot;Enter the description to search by: &quot;))</span>
+<span class="nc" id="L346">    val searchResults = gameAPI.searchGameByTitle(readNextLine(&quot;Enter the winner name to search by: &quot;))</span>
 <span class="nc bnc" id="L347" title="All 4 branches missed.">    if (searchResults.isEmpty()) {</span>
 <span class="nc" id="L348">        println(&quot;Nothing found&quot;)</span>
     } else {

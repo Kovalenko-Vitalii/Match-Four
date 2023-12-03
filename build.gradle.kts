@@ -27,6 +27,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-gradle-plugin
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.9.10")
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.16.0")
 }
 
 tasks.test {

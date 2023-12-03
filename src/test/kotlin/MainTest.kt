@@ -24,7 +24,7 @@ class MainTest {
     private var game5: Game? = null
     private var game6: Game? = null
 
-    private var populatedGames: GameAPI? = GameAPI(JSONSerializer(File("saves/testSaves/","testGames.json")))
+    private var populatedGames: GameAPI? = GameAPI(JSONSerializer(File("saves/testSaves/", "testGames.json")))
     private var emptyGames: GameAPI? = GameAPI(JSONSerializer(File("saves/testSaves/", "testEmptyGames.json")))
     private var populatedPlayers: PlayerAPI? = PlayerAPI(JSONSerializer(File("saves/testSaves/", "testPlayers.json")))
     private var emptyPlayers: PlayerAPI? = PlayerAPI(JSONSerializer(File("saves/testSaves/", "testEmptyPlayers.json")))
@@ -155,6 +155,7 @@ class MainTest {
 
     @Nested
     inner class PersistenceTests {
+        // Tests for JSON
         @Test
         fun `saving and loading an empty games collection in JSON doesn't crash app`() {
             val storingGames = GameAPI(JSONSerializer(File("saves/testSaves/", "gamesSaved.json")))
@@ -210,6 +211,7 @@ class MainTest {
             assertEquals(3, storingPlayers.numberOfPlayers())
         }
 
+        // Tests for XML
         @Test
         fun `saving and loading an empty games collection in XML doesn't crash app`() {
             val storingGames = GameAPI(XMLSerializer(File("saves/testSaves/", "gamesSaved.xml")))

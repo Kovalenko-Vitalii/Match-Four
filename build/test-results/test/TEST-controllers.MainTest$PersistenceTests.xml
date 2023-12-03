@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="controllers.MainTest$PersistenceTests" tests="8" skipped="0" failures="0" errors="0" timestamp="2023-12-02T16:50:51" hostname="LAPTOP-BKGB23SF" time="0.571">
+<testsuite name="controllers.MainTest$PersistenceTests" tests="8" skipped="0" failures="0" errors="0" timestamp="2023-12-03T03:44:15" hostname="LAPTOP-BKGB23SF" time="0.645">
   <properties/>
-  <testcase name="saving and loading an empty games collection in JSON doesn't crash app()" classname="controllers.MainTest$PersistenceTests" time="0.318"/>
-  <testcase name="saving and loading an empty games collection in XML doesn't crash app()" classname="controllers.MainTest$PersistenceTests" time="0.072"/>
-  <testcase name="saving and loading an empty players collection in XML doesn't crash app()" classname="controllers.MainTest$PersistenceTests" time="0.009"/>
-  <testcase name="saving and loading an loaded gamescollection in XML doesn't loose data()" classname="controllers.MainTest$PersistenceTests" time="0.065"/>
-  <testcase name="saving and loading an empty players collection in JSON doesn't crash app()" classname="controllers.MainTest$PersistenceTests" time="0.011"/>
-  <testcase name="saving and loading an loaded gamescollection in JSON doesn't loose data()" classname="controllers.MainTest$PersistenceTests" time="0.045"/>
-  <testcase name="saving and loading an loaded player collection in JSON doesn't loose data()" classname="controllers.MainTest$PersistenceTests" time="0.016"/>
-  <testcase name="saving and loading an loaded player collection in XML doesn't loose data()" classname="controllers.MainTest$PersistenceTests" time="0.024"/>
+  <testcase name="saving and loading an empty games collection in JSON doesn't crash app()" classname="controllers.MainTest$PersistenceTests" time="0.399"/>
+  <testcase name="saving and loading an empty games collection in XML doesn't crash app()" classname="controllers.MainTest$PersistenceTests" time="0.087"/>
+  <testcase name="saving and loading an empty players collection in XML doesn't crash app()" classname="controllers.MainTest$PersistenceTests" time="0.011"/>
+  <testcase name="saving and loading an loaded gamescollection in XML doesn't loose data()" classname="controllers.MainTest$PersistenceTests" time="0.07"/>
+  <testcase name="saving and loading an empty players collection in JSON doesn't crash app()" classname="controllers.MainTest$PersistenceTests" time="0.007"/>
+  <testcase name="saving and loading an loaded gamescollection in JSON doesn't loose data()" classname="controllers.MainTest$PersistenceTests" time="0.029"/>
+  <testcase name="saving and loading an loaded player collection in JSON doesn't loose data()" classname="controllers.MainTest$PersistenceTests" time="0.013"/>
+  <testcase name="saving and loading an loaded player collection in XML doesn't loose data()" classname="controllers.MainTest$PersistenceTests" time="0.017"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -62,82 +62,88 @@ import utilities.Validator.readNextIntWithLimit
 <span class="nc" id="L62">    }</span>
 
     /**
-     * Places a token on the game field for the respective player.
+     * Checks field if anyone have won.
+     * Was written with help of chatGPT 3.5
+     * Prompt used: I need an algorithm that will analyze this array and check if any of 1s or 2s are aligned in a sequence of four (horizontal, vertical or diagonal)
      */
     private fun checkLine(player: Int, game: Game): Boolean {
         // Check horizontal
-<span class="nc bnc" id="L69" title="All 2 branches missed.">        for (row in 0 until 6) {</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">            for (col in 0 until 4) {</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">                if (game.gameField[row][col] == player &amp;&amp;</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">                    game.gameField[row][col + 1] == player &amp;&amp;</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">                    game.gameField[row][col + 2] == player &amp;&amp;</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">                    game.gameField[row][col + 3] == player</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        for (row in 0 until 6) {</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">            for (col in 0 until 4) {</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">                if (game.gameField[row][col] == player &amp;&amp;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">                    game.gameField[row][col + 1] == player &amp;&amp;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">                    game.gameField[row][col + 2] == player &amp;&amp;</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">                    game.gameField[row][col + 3] == player</span>
                 ) {
-<span class="nc" id="L76">                    return true</span>
+<span class="nc" id="L78">                    return true</span>
                 }
             }
         }
         // Check vertical
-<span class="nc bnc" id="L81" title="All 2 branches missed.">        for (col in 0 until 7) {</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">            for (row in 0 until 3) {</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">                if (game.gameField[row][col] == player &amp;&amp;</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">                    game.gameField[row + 1][col] == player &amp;&amp;</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">                    game.gameField[row + 2][col] == player &amp;&amp;</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">                    game.gameField[row + 3][col] == player</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        for (col in 0 until 7) {</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">            for (row in 0 until 3) {</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">                if (game.gameField[row][col] == player &amp;&amp;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">                    game.gameField[row + 1][col] == player &amp;&amp;</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">                    game.gameField[row + 2][col] == player &amp;&amp;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">                    game.gameField[row + 3][col] == player</span>
                 ) {
-<span class="nc" id="L88">                    return true</span>
+<span class="nc" id="L90">                    return true</span>
                 }
             }
         }
         // Check diagonals
-<span class="nc bnc" id="L93" title="All 2 branches missed.">        for (row in 0 until 3) {</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">            for (col in 0 until 4) {</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">                if (game.gameField[row][col] == player &amp;&amp;</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">                    game.gameField[row + 1][col + 1] == player &amp;&amp;</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">                    game.gameField[row + 2][col + 2] == player &amp;&amp;</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">                    game.gameField[row + 3][col + 3] == player</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        for (row in 0 until 3) {</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">            for (col in 0 until 4) {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">                if (game.gameField[row][col] == player &amp;&amp;</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                    game.gameField[row + 1][col + 1] == player &amp;&amp;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">                    game.gameField[row + 2][col + 2] == player &amp;&amp;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                    game.gameField[row + 3][col + 3] == player</span>
                 ) {
-<span class="nc" id="L100">                    return true</span>
+<span class="nc" id="L102">                    return true</span>
                 }
             }
         }
-<span class="nc bnc" id="L104" title="All 2 branches missed.">        for (row in 3 until 6) {</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">            for (col in 0 until 4) {</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">                if (game.gameField[row][col] == player &amp;&amp;</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">                    game.gameField[row - 1][col + 1] == player &amp;&amp;</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">                    game.gameField[row - 2][col + 2] == player &amp;&amp;</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">                    game.gameField[row - 3][col + 3] == player</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        for (row in 3 until 6) {</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">            for (col in 0 until 4) {</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">                if (game.gameField[row][col] == player &amp;&amp;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">                    game.gameField[row - 1][col + 1] == player &amp;&amp;</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">                    game.gameField[row - 2][col + 2] == player &amp;&amp;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">                    game.gameField[row - 3][col + 3] == player</span>
                 ) {
-<span class="nc" id="L111">                    return true</span>
+<span class="nc" id="L113">                    return true</span>
                 }
             }
         }
-<span class="nc" id="L115">        return false</span>
+<span class="nc" id="L117">        return false</span>
     }
 
     // Other private methods for managing the game mechanics
     private fun checkGame(game: Game): Boolean {
-<span class="nc bnc" id="L120" title="All 2 branches missed.">        if (checkLine(1, game)) {</span>
-<span class="nc" id="L121">            println(&quot;Player 1 has won this game!&quot;)</span>
-<span class="nc" id="L122">            return true</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">        } else if (checkLine(2, game)) {</span>
-<span class="nc" id="L124">            println(&quot;Player 2 has won this game!&quot;)</span>
-<span class="nc" id="L125">            return true</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">        if (checkLine(1, game)) {</span>
+<span class="nc" id="L123">            println(&quot;Player 1 has won this game!&quot;)</span>
+<span class="nc" id="L124">            return true</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">        } else if (checkLine(2, game)) {</span>
+<span class="nc" id="L126">            println(&quot;Player 2 has won this game!&quot;)</span>
+<span class="nc" id="L127">            return true</span>
         }
-<span class="nc" id="L127">        return false</span>
+<span class="nc" id="L129">        return false</span>
     }
+
+    /**
+     * Places a token on the game field for the respective player.
+     */
     private fun placeToken(playerNumber: Int, game: Game) {
-<span class="nc" id="L130">        displayField(game)</span>
-<span class="nc" id="L131">        while (true) {</span>
-<span class="nc" id="L132">            val columnSelected = readNextIntWithLimit(&quot;PLAYER $playerNumber: Enter a row (1-7)&quot;, 1, 7) - 1</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">            for (i in game.gameField.size - 1 downTo 0) {</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">                if (game.gameField[i][columnSelected] == 0) {</span>
-<span class="nc" id="L135">                    game.gameField[i][columnSelected] = playerNumber</span>
-<span class="nc" id="L136">                    displayField(game)</span>
-<span class="nc" id="L137">                    return</span>
+<span class="nc" id="L136">        displayField(game)</span>
+<span class="nc" id="L137">        while (true) {</span>
+<span class="nc" id="L138">            val columnSelected = readNextIntWithLimit(&quot;PLAYER $playerNumber: Enter a row (1-7)&quot;, 1, 7) - 1</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">            for (i in game.gameField.size - 1 downTo 0) {</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">                if (game.gameField[i][columnSelected] == 0) {</span>
+<span class="nc" id="L141">                    game.gameField[i][columnSelected] = playerNumber</span>
+<span class="nc" id="L142">                    displayField(game)</span>
+<span class="nc" id="L143">                    return</span>
                 }
             }
-<span class="nc" id="L140">            println(&quot;There is no space left in the column!&quot;)</span>
+<span class="nc" id="L146">            println(&quot;There is no space left in the column!&quot;)</span>
         }
     }
 }
